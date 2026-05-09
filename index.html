@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoviesDigger</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05030f;--bg-card:#0d0820;--bg-panel:#110d25;
+  --pm:#3d1a7a;--pb:#7b2fff;--sb:#0d2b6e;--sbb:#1a52cc;
+  --ar:#c0145a;--ac:#8b0045;
+  --tp:#e8e0ff;--tm:#7a6fa0;--td:#4a3f6b;
+  --border:#2a1f4a;--star:#f5c842;
+  --gp:0 0 20px rgba(123,47,255,.4);--gr:0 0 20px rgba(192,20,90,.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--tp);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(1px 1px at 10% 15%,rgba(255,255,255,.6) 0%,transparent 100%),radial-gradient(1px 1px at 25% 40%,rgba(255,255,255,.4) 0%,transparent 100%),radial-gradient(1px 1px at 50% 10%,rgba(255,255,255,.5) 0%,transparent 100%),radial-gradient(1px 1px at 75% 60%,rgba(255,255,255,.3) 0%,transparent 100%),radial-gradient(1px 1px at 90% 25%,rgba(255,255,255,.6) 0%,transparent 100%),radial-gradient(2px 2px at 70% 20%,rgba(123,47,255,.5) 0%,transparent 100%),radial-gradient(2px 2px at 30% 55%,rgba(26,82,204,.4) 0%,transparent 100%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 0%,rgba(61,26,122,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(13,43,110,.2) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+header{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,rgba(5,3,15,.98),rgba(10,6,25,.95));border-bottom:1px solid var(--border);backdrop-filter:blur(20px);padding:0 2rem;}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1.5rem;height:70px;}
+.logo{font-family:'Orbitron',monospace;font-size:1.6rem;font-weight:900;background:linear-gradient(135deg,#c0145a,#8b0045 40%,#7b2fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 12px rgba(192,20,90,.6));letter-spacing:2px;white-space:nowrap;cursor:pointer;flex-shrink:0;}
+.search-bar{flex:1;max-width:500px;position:relative;}
+.search-bar input{width:100%;background:rgba(26,15,60,.8);border:1px solid var(--border);border-radius:8px;padding:10px 16px 10px 42px;color:var(--tp);font-family:'Exo 2',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s,box-shadow .3s;}
+.search-bar input:focus{border-color:var(--pb);box-shadow:var(--gp);}
+.search-bar input::placeholder{color:var(--td);}
+.si{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--td);}
+.header-actions{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.btn-admin{background:linear-gradient(135deg,var(--ac),var(--ar));border:none;border-radius:6px;padding:8px 18px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all .3s;box-shadow:0 0 15px rgba(192,20,90,.3);}
+.btn-admin:hover{box-shadow:var(--gr);transform:translateY(-1px);}
+.btn-logout{background:rgba(123,47,255,.15);border:1px solid var(--border);border-radius:6px;padding:8px 14px;color:var(--tm);font-family:'Rajdhani',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s;display:none;}
+.btn-logout:hover{border-color:var(--ar);color:#e0356e;}
+
+.cat-bar{position:relative;z-index:1;background:rgba(11,7,28,.9);border-bottom:1px solid var(--border);padding:0 2rem;}
+.cat-inner{max-width:1400px;margin:0 auto;display:flex;gap:.5rem;overflow-x:auto;padding:12px 0;scrollbar-width:none;}
+.cat-inner::-webkit-scrollbar{display:none;}
+.cat-btn{background:rgba(26,15,60,.7);border:1px solid var(--border);border-radius:20px;padding:6px 18px;color:var(--tm);font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .3s;}
+.cat-btn:hover,.cat-btn.active{background:linear-gradient(135deg,var(--pm),var(--sb));border-color:var(--pb);color:#fff;box-shadow:var(--gp);}
+
+main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
+.sec-title{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--pb);letter-spacing:3px;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.5rem;margin-bottom:2rem;}
+.movie-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);animation:fadeUp .5s ease both;}
+.movie-card:hover{transform:translateY(-8px) scale(1.02);border-color:var(--pb);box-shadow:0 20px 40px rgba(0,0,0,.6),var(--gp);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.card-poster{position:relative;aspect-ratio:2/3;overflow:hidden;background:#0a0618;}
+.card-poster img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.movie-card:hover .card-poster img{transform:scale(1.08);}
+.card-quality{position:absolute;top:8px;right:8px;background:linear-gradient(135deg,var(--pm),var(--sb));border-radius:4px;padding:2px 8px;font-family:'Orbitron',monospace;font-size:.6rem;font-weight:700;color:#fff;letter-spacing:1px;}
+.card-rating{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.8);border-radius:4px;padding:3px 8px;font-size:.75rem;color:var(--star);font-weight:600;}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,3,15,.9),transparent 60%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:12px;}
+.movie-card:hover .card-overlay{opacity:1;}
+.overlay-btn{width:100%;background:linear-gradient(135deg,var(--pb),var(--sbb));border:none;border-radius:6px;padding:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;}
+.card-info{padding:10px 12px;}
+.card-title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;color:var(--tp);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-meta{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--tm);}
+
+.loader{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem;gap:1rem;grid-column:1/-1;}
+.spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--pb);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loader-text{font-family:'Orbitron',monospace;font-size:.75rem;color:var(--tm);letter-spacing:3px;}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;}
+.overlay.open{display:flex;}
+.modal{background:var(--bg-panel);border:1px solid var(--border);border-radius:16px;max-width:820px;width:100%;max-height:90vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--pm) transparent;box-shadow:0 40px 80px rgba(0,0,0,.8),var(--gp);animation:modalIn .3s cubic-bezier(.34,1.56,.64,1);position:relative;}
+@keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-close{position:absolute;top:1rem;right:1rem;background:rgba(123,47,255,.2);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;color:var(--tm);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10;}
+.modal-close:hover{background:var(--ar);color:#fff;}
+.modal-header{display:flex;gap:1.5rem;padding:1.5rem;border-bottom:1px solid var(--border);}
+.modal-poster{width:150px;flex-shrink:0;border-radius:8px;overflow:hidden;background:#0a0618;}
+.modal-poster img{width:100%;display:block;}
+.modal-info{flex:1;}
+.modal-title{font-family:'Orbitron',monospace;font-size:1.2rem;font-weight:700;color:var(--tp);margin-bottom:8px;line-height:1.3;}
+.modal-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.tag{background:rgba(123,47,255,.15);border:1px solid rgba(123,47,255,.4);border-radius:4px;padding:2px 10px;font-size:.75rem;color:var(--pb);}
+.tag.red{background:rgba(192,20,90,.15);border-color:rgba(192,20,90,.4);color:#e0356e;}
+.tag.blue{background:rgba(13,43,110,.3);border-color:rgba(26,82,204,.4);color:#6ea8ff;}
+.modal-rating{font-size:1.3rem;color:var(--star);font-weight:700;margin-bottom:8px;}
+.modal-desc{font-size:.85rem;color:var(--tm);line-height:1.7;}
+.modal-body{padding:1.5rem;}
+.modal-body h3{font-family:'Orbitron',monospace;font-size:.8rem;color:var(--pb);letter-spacing:2px;margin-bottom:1rem;}
+.dl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+.dl-btn{background:linear-gradient(135deg,rgba(26,15,60,.9),rgba(13,43,110,.5));border:1px solid var(--pb);border-radius:8px;padding:12px 16px;color:var(--tp);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:space-between;font-family:'Rajdhani',sans-serif;font-size:.9rem;width:100%;text-decoration:none;}
+.dl-btn:hover{box-shadow:var(--gp);}
+.dl-label{font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;color:var(--pb);}
+.dl-size{font-size:.75rem;color:var(--tm);margin-top:2px;}
+.no-links{background:rgba(26,15,60,.4);border:1px dashed var(--border);border-radius:8px;padding:1.5rem;text-align:center;color:var(--td);font-family:'Rajdhani',sans-serif;font-size:.9rem;}
+
+.login-modal{background:var(--bg-panel);border:1px solid var(--pm);border-radius:16px;max-width:400px;width:100%;box-shadow:0 0 60px rgba(123,47,255,.4);animation:modalIn .3s ease;padding:2rem;}
+.login-title{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--ar);letter-spacing:3px;text-align:center;margin-bottom:1.5rem;}
+.login-err{background:rgba(192,20,90,.15);border:1px solid rgba(192,20,90,.4);border-radius:6px;padding:8px 12px;font-size:.8rem;color:#e0356e;margin-bottom:1rem;display:none;text-align:center;}
+
+.admin-modal{background:var(--bg-panel);border:1px solid var(--pm);border-radius:16px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--pm) transparent;box-shadow:0 0 60px rgba(123,47,255,.3);animation:modalIn .3s ease;position:relative;}
+.admin-header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem;border-bottom:1px solid var(--border);}
+.admin-title{font-family:'Orbitron',monospace;font-size:1rem;color:var(--ar);letter-spacing:3px;}
+.admin-body{padding:1.5rem;}
+.admin-tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;}
+.tab-btn{background:rgba(26,15,60,.7);border:1px solid var(--border);border-radius:6px;padding:8px 20px;color:var(--tm);font-family:'Rajdhani',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;}
+.tab-btn.active{background:linear-gradient(135deg,var(--ac),var(--ar));border-color:var(--ar);color:#fff;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.form-group{margin-bottom:1rem;}
+.form-group label{display:block;font-family:'Rajdhani',sans-serif;font-size:.8rem;color:var(--tm);letter-spacing:1px;margin-bottom:6px;}
+.form-group input,.form-group textarea{width:100%;background:rgba(5,3,15,.8);border:1px solid var(--border);border-radius:6px;padding:10px 14px;color:var(--tp);font-family:'Exo 2',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--ar);}
+.btn-submit{width:100%;background:linear-gradient(135deg,var(--ac),var(--ar));border:none;border-radius:8px;padding:12px;color:#fff;font-family:'Orbitron',monospace;font-size:.8rem;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .3s;margin-top:.5rem;}
+.btn-submit:hover{box-shadow:var(--gr);transform:translateY(-1px);}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.tmdb-results{display:flex;flex-direction:column;gap:8px;margin-top:1rem;max-height:280px;overflow-y:auto;}
+.tmdb-item{background:rgba(5,3,15,.6);border:1px solid var(--border);border-radius:8px;padding:10px;display:flex;gap:10px;cursor:pointer;transition:all .2s;}
+.tmdb-item:hover{border-color:var(--pb);}
+.tmdb-item img{width:36px;height:52px;object-fit:cover;border-radius:4px;flex-shrink:0;}
+.ti-title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;}
+.ti-meta{font-size:.75rem;color:var(--tm);}
+.sel-preview{background:rgba(123,47,255,.1);border:1px solid rgba(123,47,255,.3);border-radius:8px;padding:12px;margin-bottom:1rem;display:flex;gap:12px;align-items:center;}
+.sel-preview img{width:50px;height:72px;object-fit:cover;border-radius:4px;}
+.sp-title{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;}
+.sp-meta{font-size:.75rem;color:var(--tm);}
+.link-row{display:flex;gap:8px;margin-bottom:8px;}
+.link-row input{flex:1;background:rgba(5,3,15,.8);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--tp);font-family:'Exo 2',sans-serif;font-size:.82rem;outline:none;}
+.link-row input:focus{border-color:var(--ar);}
+.btn-add-link{background:rgba(123,47,255,.2);border:1px solid var(--pb);border-radius:6px;padding:8px 12px;color:var(--pb);font-size:.8rem;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.btn-add-link:hover{background:rgba(123,47,255,.4);}
+.admin-list{display:flex;flex-direction:column;gap:10px;}
+.admin-item{background:rgba(5,3,15,.6);border:1px solid var(--border);border-radius:8px;padding:12px;display:flex;align-items:center;gap:12px;}
+.admin-item img{width:36px;height:52px;object-fit:cover;border-radius:4px;flex-shrink:0;}
+.admin-item-name{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;}
+.admin-item-meta{font-size:.75rem;color:var(--tm);}
+.btn-del{background:rgba(192,20,90,.2);border:1px solid var(--ar);border-radius:5px;padding:5px 12px;color:#e0356e;font-size:.8rem;cursor:pointer;flex-shrink:0;}
+.btn-del:hover{background:var(--ar);color:#fff;}
+
+.no-results{text-align:center;padding:4rem;color:var(--td);font-family:'Orbitron',monospace;font-size:.9rem;letter-spacing:2px;display:none;grid-column:1/-1;}
+.load-more-btn{display:none;margin:0 auto 3rem;background:linear-gradient(135deg,var(--pm),var(--sb));border:1px solid var(--pb);border-radius:8px;padding:12px 40px;color:#fff;font-family:'Orbitron',monospace;font-size:.75rem;letter-spacing:2px;cursor:pointer;transition:all .3s;}
+.load-more-btn:hover{box-shadow:var(--gp);transform:translateY(-2px);}
+.toast{position:fixed;bottom:2rem;right:2rem;background:linear-gradient(135deg,var(--pm),var(--sb));border:1px solid var(--pb);border-radius:8px;padding:12px 20px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:.9rem;z-index:9999;transform:translateX(200px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);box-shadow:var(--gp);}
+.toast.show{transform:translateX(0);opacity:1;}
+@media(max-width:600px){.header-inner{flex-wrap:wrap;height:auto;padding:1rem 0;gap:.8rem;}.search-bar{order:3;width:100%;max-width:100%;}.movie-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;}.modal-header{flex-direction:column;}.link-row{flex-wrap:wrap;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo" onclick="goHome()">MOVIESDIGGER</div>
+    <div class="search-bar">
+      <span class="si">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search movies..." oninput="handleSearch()">
+    </div>
+    <div class="header-actions">
+      <button class="btn-logout" id="logoutBtn" onclick="logout()">LOGOUT</button>
+      <button class="btn-admin" onclick="openAdmin()">⚙ ADMIN</button>
+    </div>
+  </div>
+</header>
+
+<div class="cat-bar">
+  <div class="cat-inner">
+    <button class="cat-btn active" onclick="setCategory('popular',this)">🔥 Popular</button>
+    <button class="cat-btn" onclick="setCategory('top_rated',this)">⭐ Top Rated</button>
+    <button class="cat-btn" onclick="setCategory('now_playing',this)">🆕 Now Playing</button>
+    <button class="cat-btn" onclick="setCategory('upcoming',this)">📅 Upcoming</button>
+    <button class="cat-btn" onclick="setCategory('28',this)">💥 Action</button>
+    <button class="cat-btn" onclick="setCategory('53',this)">🔪 Thriller</button>
+    <button class="cat-btn" onclick="setCategory('27',this)">👻 Horror</button>
+    <button class="cat-btn" onclick="setCategory('10749',this)">❤️ Romance</button>
+    <button class="cat-btn" onclick="setCategory('12',this)">🌍 Adventure</button>
+    <button class="cat-btn" onclick="setCategory('878',this)">🚀 Sci-Fi</button>
+    <button class="cat-btn" onclick="setCategory('saved',this)">💾 My Library</button>
+  </div>
+</div>
+
+<main>
+  <div class="sec-title" id="sectionTitle">POPULAR MOVIES</div>
+  <div class="movie-grid" id="movieGrid"></div>
+  <div class="no-results" id="noResults">NO MOVIES FOUND</div>
+  <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">LOAD MORE</button>
+</main>
+
+<!-- Movie Modal -->
+<div class="overlay" id="movieOverlay" onclick="if(event.target===this)closeMovie()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeMovie()">✕</button>
+    <div class="modal-header">
+      <div class="modal-poster"><img id="mPoster" src="" alt=""></div>
+      <div class="modal-info">
+        <div class="modal-title" id="mTitle"></div>
+        <div class="modal-tags" id="mTags"></div>
+        <div class="modal-rating" id="mRating"></div>
+        <div class="modal-desc" id="mDesc"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <h3>⬇ DOWNLOAD OPTIONS</h3>
+      <div id="dlOptions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="overlay" id="loginOverlay" onclick="if(event.target===this)closeLogin()">
+  <div class="login-modal">
+    <div class="login-title">🔐 ADMIN LOGIN</div>
+    <div class="login-err" id="loginErr"></div>
+    <div class="form-group"><label>USERNAME</label><input type="text" id="loginUser" placeholder="admin"></div>
+    <div class="form-group"><label>PASSWORD</label><input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-submit" id="loginBtn" onclick="doLogin()">LOGIN</button>
+  </div>
+</div>
+
+<!-- Admin Modal -->
+<div class="overlay" id="adminOverlay" onclick="if(event.target===this)closeAdminPanel()">
+  <div class="admin-modal">
+    <div class="admin-header">
+      <div class="admin-title">⚙ ADMIN PANEL</div>
+      <button class="modal-close" style="position:static;" onclick="closeAdminPanel()">✕</button>
+    </div>
+    <div class="admin-body">
+      <div class="admin-tabs">
+        <button class="tab-btn active" onclick="switchTab('add',this)">🔍 ADD MOVIE</button>
+        <button class="tab-btn" onclick="switchTab('manage',this)">📋 MANAGE</button>
+        <button class="tab-btn" onclick="switchTab('pass',this)">🔑 PASSWORD</button>
+      </div>
+
+      <div class="tab-content active" id="tab-add">
+        <div class="form-group">
+          <label>SEARCH MOVIE ON TMDB</label>
+          <input type="text" id="tmdbQ" placeholder="e.g. Inception, Dune..." oninput="tmdbSearch()">
+        </div>
+        <div class="tmdb-results" id="tmdbResults"></div>
+        <div id="selForm" style="display:none;margin-top:1rem;">
+          <div class="sel-preview">
+            <img id="selImg" src="" alt="">
+            <div><div class="sp-title" id="selName"></div><div class="sp-meta" id="selMeta"></div></div>
+          </div>
+          <label style="font-family:Rajdhani,sans-serif;font-size:.8rem;color:var(--tm);letter-spacing:1px;display:block;margin-bottom:8px;">DOWNLOAD LINKS (OPTIONAL)</label>
+          <div id="linkRows">
+            <div class="link-row">
+              <input type="text" placeholder="Label (e.g. 1080p Hindi)" class="ll">
+              <input type="text" placeholder="URL" class="lu">
+              <input type="text" placeholder="Size" class="ls" style="max-width:90px;">
+            </div>
+          </div>
+          <button class="btn-add-link" onclick="addLinkRow()">+ Add Link</button>
+          <button class="btn-submit" id="saveBtn" onclick="saveMovie()" style="margin-top:1rem;">💾 SAVE TO LIBRARY</button>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-manage">
+        <div class="admin-list" id="adminList"></div>
+      </div>
+
+      <div class="tab-content" id="tab-pass">
+        <p style="font-size:.85rem;color:var(--tm);margin-bottom:1rem;">Change your admin password.</p>
+        <div class="form-group"><label>CURRENT PASSWORD</label><input type="password" id="curPass" placeholder="Current password"></div>
+        <div class="form-group"><label>NEW PASSWORD</label><input type="password" id="newPass" placeholder="New password (min 6 chars)"></div>
+        <div class="form-group"><label>CONFIRM NEW PASSWORD</label><input type="password" id="confPass" placeholder="Confirm new password"></div>
+        <button class="btn-submit" onclick="changePassword()">UPDATE PASSWORD</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var EDGE='https://rmtrkfzhlrwfjqwinrlh.supabase.co/functions/v1/Admin-action';
+var SUPA_URL='https://rmtrkfzhlrwfjqwinrlh.supabase.co';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtdHJrZnpobHJ3Zmpxd2lucmxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMDU5NTAsImV4cCI6MjA5Mzg4MTk1MH0.Nzj2NmzxDZ6v8Sezn2Ib_l7J-g7XXWMSVqx5oEgdAOo';
+var TMDB_KEY='2da0a6830301894d5217292af487a077';
+var TMDB='https://api.themoviedb.org/3';
+var IMG='https://image.tmdb.org/t/p/w500';
+
+var isLoggedIn=false;
+var adminUser='';
+var adminPass='';
+var currentCategory='popular';
+var currentPage=1;
+var totalPages=1;
+var isSearchMode=false;
+var searchTimer=null;
+var tmdbTimer=null;
+var selectedMovie=null;
+var genreMap={};
+
+// Read-only Supabase fetch (public data, allowed by RLS)
+function sbGet(table,params){
+  return fetch(SUPA_URL+'/rest/v1/'+table+'?'+params,{
+    headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}
+  }).then(function(r){return r.json();});
+}
+
+// All writes go through Edge Function
+function callEdge(body){
+  return fetch(EDGE,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(Object.assign({username:adminUser,password:adminPass},body))
+  }).then(function(r){return r.json();});
+}
+
+fetch(TMDB+'/genre/movie/list?api_key='+TMDB_KEY)
+  .then(function(r){return r.json();})
+  .then(function(d){if(d.genres)d.genres.forEach(function(g){genreMap[g.id]=g.name;});});
+
+function goHome(){
+  document.getElementById('searchInput').value='';
+  isSearchMode=false;
+  setCategory('popular',document.querySelector('.cat-btn'));
+}
+
+function setCategory(cat,btn){
+  isSearchMode=false;
+  document.getElementById('searchInput').value='';
+  currentCategory=cat;currentPage=1;
+  document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  var titles={popular:'POPULAR MOVIES',top_rated:'TOP RATED',now_playing:'NOW PLAYING',upcoming:'UPCOMING','28':'ACTION','53':'THRILLER','27':'HORROR','10749':'ROMANCE','12':'ADVENTURE','878':'SCI-FI',saved:'MY LIBRARY'};
+  document.getElementById('sectionTitle').textContent=titles[cat]||'MOVIES';
+  document.getElementById('movieGrid').innerHTML='';
+  if(cat==='saved'){loadSaved();}else{loadMovies();}
+}
+
+function loadMovies(){
+  showLoader();
+  var genres=['28','53','27','10749','12','878'];
+  var url=genres.indexOf(currentCategory)!==-1
+    ?TMDB+'/discover/movie?api_key='+TMDB_KEY+'&with_genres='+currentCategory+'&sort_by=popularity.desc&page='+currentPage
+    :TMDB+'/movie/'+currentCategory+'?api_key='+TMDB_KEY+'&page='+currentPage;
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    totalPages=d.total_pages||1;
+    renderTMDB(d.results||[],currentPage>1);
+    document.getElementById('loadMoreBtn').style.display=currentPage<totalPages?'block':'none';
+  }).catch(showErr);
+}
+
+function loadSaved(){
+  showLoader();
+  document.getElementById('loadMoreBtn').style.display='none';
+  sbGet('movies','select=*,download_links(*)&order=created_at.desc').then(function(data){
+    var grid=document.getElementById('movieGrid');
+    if(!data||data.length===0){grid.innerHTML='';document.getElementById('noResults').style.display='block';return;}
+    document.getElementById('noResults').style.display='none';
+    grid.innerHTML=data.map(function(m,i){
+      return buildCard('db'+m.id,m.poster||'',m.title,m.year||'',m.rating||'N/A',i*0.04);
+    }).join('');
+  });
+}
+
+function loadMore(){
+  currentPage++;
+  if(isSearchMode){searchTMDB(document.getElementById('searchInput').value,currentPage);}
+  else{loadMovies();}
+}
+
+function handleSearch(){
+  clearTimeout(searchTimer);
+  var q=document.getElementById('searchInput').value.trim();
+  if(!q){isSearchMode=false;currentPage=1;loadMovies();return;}
+  searchTimer=setTimeout(function(){
+    isSearchMode=true;currentPage=1;
+    document.getElementById('sectionTitle').textContent='SEARCH: '+q.toUpperCase();
+    document.getElementById('movieGrid').innerHTML='';
+    searchTMDB(q,1);
+  },400);
+}
+
+function searchTMDB(q,page){
+  showLoader();
+  fetch(TMDB+'/search/movie?api_key='+TMDB_KEY+'&query='+encodeURIComponent(q)+'&page='+page)
+    .then(function(r){return r.json();})
+    .then(function(d){
+      totalPages=d.total_pages||1;
+      renderTMDB(d.results||[],page>1);
+      document.getElementById('loadMoreBtn').style.display=page<totalPages?'block':'none';
+    }).catch(showErr);
+}
+
+function showLoader(){
+  if(currentPage===1){
+    document.getElementById('noResults').style.display='none';
+    document.getElementById('movieGrid').innerHTML='<div class="loader"><div class="spinner"></div><div class="loader-text">LOADING...</div></div>';
+  }
+}
+function showErr(){document.getElementById('movieGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--td);font-family:Orbitron,monospace;font-size:.9rem;letter-spacing:2px;">FAILED TO LOAD</div>';}
+
+function renderTMDB(results,append){
+  var grid=document.getElementById('movieGrid');
+  var list=results.filter(function(m){return m.poster_path;});
+  if(!append){
+    if(list.length===0){grid.innerHTML='';document.getElementById('noResults').style.display='block';return;}
+    document.getElementById('noResults').style.display='none';
+    grid.innerHTML=list.map(function(m,i){
+      var r=m.vote_average?m.vote_average.toFixed(1):'N/A';
+      var y=m.release_date?m.release_date.substring(0,4):'';
+      return buildCard('t'+m.id,IMG+m.poster_path,m.title,y,r,i*0.04);
+    }).join('');
+  } else {
+    list.forEach(function(m,i){
+      var r=m.vote_average?m.vote_average.toFixed(1):'N/A';
+      var y=m.release_date?m.release_date.substring(0,4):'';
+      grid.insertAdjacentHTML('beforeend',buildCard('t'+m.id,IMG+m.poster_path,m.title,y,r,i*0.02));
+    });
+  }
+}
+
+function buildCard(id,poster,title,year,rating,delay){
+  var safe=String(title).replace(/'/g,'&#39;');
+  return '<div class="movie-card" style="animation-delay:'+delay+'s" onclick="openMovie(\''+id+'\',\''+safe+'\')">'
+    +'<div class="card-poster">'
+    +'<img src="'+poster+'" alt="'+safe+'" loading="lazy" onerror="this.src=\'https://via.placeholder.com/300x450/0d0820/7b2fff?text=No+Poster\'">'
+    +'<div class="card-quality">HD</div>'
+    +'<div class="card-rating">⭐ '+rating+'</div>'
+    +'<div class="card-overlay"><button class="overlay-btn">▶ VIEW DETAILS</button></div>'
+    +'</div>'
+    +'<div class="card-info"><div class="card-title">'+title+'</div>'
+    +'<div class="card-meta"><span>'+year+'</span></div></div></div>';
+}
+
+function openMovie(id){
+  if(id.charAt(0)==='t'){
+    var tmdbId=id.substring(1);
+    fetch(TMDB+'/movie/'+tmdbId+'?api_key='+TMDB_KEY+'&append_to_response=credits')
+      .then(function(r){return r.json();})
+      .then(function(m){
+        sbGet('movies','select=*,download_links(*)&tmdb_id=eq.'+tmdbId).then(function(saved){
+          var links=saved&&saved.length>0&&saved[0].download_links?saved[0].download_links:[];
+          showMovieModal(m,links);
+        });
+      });
+  } else {
+    var dbId=id.substring(2);
+    sbGet('movies','select=*,download_links(*)&id=eq.'+dbId).then(function(data){
+      if(!data||!data[0])return;
+      var m=data[0];
+      showMovieModal({
+        title:m.title,_poster:m.poster,overview:m.description||'',
+        vote_average:parseFloat(m.rating)||0,vote_count:0,
+        release_date:(m.year||'2000')+'-01-01',genres:[],runtime:0,
+        credits:{crew:[],cast:[]}
+      },m.download_links||[]);
+    });
+  }
+}
+
+function showMovieModal(m,links){
+  var poster=m._poster||(m.poster_path?IMG+m.poster_path:'https://via.placeholder.com/300x450/0d0820/7b2fff?text=No+Poster');
+  var yr=m.release_date?m.release_date.substring(0,4):'';
+  var rat=m.vote_average?m.vote_average.toFixed(1):'N/A';
+  var genres=m.genres?m.genres.map(function(g){return g.name;}).join(', '):'';
+  var runtime=m.runtime?Math.floor(m.runtime/60)+'h '+(m.runtime%60)+'m':'';
+  var director='',cast='';
+  if(m.credits&&m.credits.crew){var d=m.credits.crew.find(function(c){return c.job==='Director';});if(d)director=d.name;}
+  if(m.credits&&m.credits.cast){cast=m.credits.cast.slice(0,3).map(function(c){return c.name;}).join(', ');}
+  document.getElementById('mPoster').src=poster;
+  document.getElementById('mTitle').textContent=m.title||'';
+  document.getElementById('mRating').textContent='⭐ '+rat+' / 10'+(m.vote_count?' ('+m.vote_count.toLocaleString()+' votes)':'');
+  document.getElementById('mDesc').textContent=m.overview||'No description available.';
+  document.getElementById('mTags').innerHTML=
+    (yr?'<span class="tag">'+yr+'</span>':'')+
+    (runtime?'<span class="tag">'+runtime+'</span>':'')+
+    (genres?'<span class="tag red">'+genres+'</span>':'')+
+    (director?'<span class="tag blue">'+director+'</span>':'')+
+    (cast?'<span class="tag">'+cast+'</span>':'');
+  if(links&&links.length>0){
+    document.getElementById('dlOptions').innerHTML='<div class="dl-grid">'+links.map(function(l){
+      return l.url
+        ?'<a class="dl-btn" href="'+l.url+'" target="_blank" rel="noopener"><span><div class="dl-label">'+l.label+'</div><div class="dl-size">'+(l.size||'')+'</div></span><span>⬇</span></a>'
+        :'<div class="dl-btn" style="cursor:default;opacity:.6"><span><div class="dl-label">'+l.label+'</div><div class="dl-size">'+(l.size||'')+'</div></span><span>🔒</span></div>';
+    }).join('')+'</div>';
+  } else {
+    document.getElementById('dlOptions').innerHTML='<div class="no-links">No download links added yet.</div>';
+  }
+  document.getElementById('movieOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeMovie(){document.getElementById('movieOverlay').classList.remove('open');document.body.style.overflow='';}
+
+// AUTH
+function openAdmin(){if(isLoggedIn){openAdminPanel();}else{openLogin();}}
+function openLogin(){document.getElementById('loginOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeLogin(){document.getElementById('loginOverlay').classList.remove('open');document.body.style.overflow='';}
+
+function doLogin(){
+  var u=document.getElementById('loginUser').value.trim();
+  var p=document.getElementById('loginPass').value;
+  var btn=document.getElementById('loginBtn');
+  var err=document.getElementById('loginErr');
+  if(!u||!p){err.textContent='Enter username and password.';err.style.display='block';return;}
+  btn.disabled=true;btn.textContent='CHECKING...';
+  callEdge({action:'login',username:u,password:p}).then(function(res){
+    if(res&&res.success){
+      isLoggedIn=true;adminUser=u;adminPass=p;
+      document.getElementById('logoutBtn').style.display='block';
+      err.style.display='none';
+      document.getElementById('loginUser').value='';
+      document.getElementById('loginPass').value='';
+      closeLogin();openAdminPanel();
+      showToast('Welcome back, '+u+'!');
+    } else {
+      err.textContent='Invalid username or password.';
+      err.style.display='block';
+    }
+    btn.disabled=false;btn.textContent='LOGIN';
+  }).catch(function(){
+    err.textContent='Connection error. Try again.';
+    err.style.display='block';
+    btn.disabled=false;btn.textContent='LOGIN';
+  });
+}
+
+function logout(){isLoggedIn=false;adminUser='';adminPass='';document.getElementById('logoutBtn').style.display='none';showToast('Logged out.');}
+
+function openAdminPanel(){document.getElementById('adminOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeAdminPanel(){document.getElementById('adminOverlay').classList.remove('open');document.body.style.overflow='';}
+
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(tab==='manage')loadAdminList();
+}
+
+function tmdbSearch(){
+  clearTimeout(tmdbTimer);
+  var q=document.getElementById('tmdbQ').value.trim();
+  document.getElementById('selForm').style.display='none';selectedMovie=null;
+  if(!q){document.getElementById('tmdbResults').innerHTML='';return;}
+  tmdbTimer=setTimeout(function(){
+    fetch(TMDB+'/search/movie?api_key='+TMDB_KEY+'&query='+encodeURIComponent(q))
+      .then(function(r){return r.json();})
+      .then(function(d){
+        document.getElementById('tmdbResults').innerHTML=(d.results||[]).slice(0,6).map(function(m){
+          var yr=m.release_date?m.release_date.substring(0,4):'';
+          var rat=m.vote_average?m.vote_average.toFixed(1):'';
+          var poster=m.poster_path?IMG+m.poster_path:'https://via.placeholder.com/36x52/0d0820/7b2fff?text=?';
+          var safeTitle=String(m.title).replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+          var safeDesc=String(m.overview||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/\n/g,' ');
+          return '<div class="tmdb-item" onclick="selectMovie('+m.id+',\''+safeTitle+'\',\''+poster+'\',\''+yr+'\',\''+rat+'\',\''+safeDesc+'\')">'
+            +'<img src="'+poster+'" alt=""><div>'
+            +'<div class="ti-title">'+m.title+'</div>'
+            +'<div class="ti-meta">'+yr+(rat?' · ⭐'+rat:'')+' · '+(m.vote_count||0).toLocaleString()+' votes</div>'
+            +'</div></div>';
+        }).join('');
+      });
+  },300);
+}
+
+function selectMovie(id,title,poster,year,rating,desc){
+  selectedMovie={tmdb_id:String(id),title:title,poster:poster,year:year,rating:rating,description:desc};
+  document.getElementById('selImg').src=poster;
+  document.getElementById('selName').textContent=title;
+  document.getElementById('selMeta').textContent=year+(rating?' · ⭐'+rating:'');
+  document.getElementById('linkRows').innerHTML='<div class="link-row"><input type="text" placeholder="Label (e.g. 1080p Hindi)" class="ll"><input type="text" placeholder="URL" class="lu"><input type="text" placeholder="Size" class="ls" style="max-width:90px;"></div>';
+  document.getElementById('selForm').style.display='block';
+  document.getElementById('tmdbResults').innerHTML='';
+  document.getElementById('tmdbQ').value='';
+}
+
+function addLinkRow(){
+  document.getElementById('linkRows').insertAdjacentHTML('beforeend',
+    '<div class="link-row"><input type="text" placeholder="Label" class="ll"><input type="text" placeholder="URL" class="lu"><input type="text" placeholder="Size" class="ls" style="max-width:90px;"></div>');
+}
+
+function saveMovie(){
+  if(!selectedMovie){showToast('Select a movie first!');return;}
+  var btn=document.getElementById('saveBtn');
+  btn.disabled=true;btn.textContent='SAVING...';
+  var rows=document.querySelectorAll('#linkRows .link-row');
+  var links=[];
+  rows.forEach(function(row){
+    var label=row.querySelector('.ll').value.trim();
+    var url=row.querySelector('.lu').value.trim();
+    var size=row.querySelector('.ls').value.trim();
+    if(label)links.push({label:label,url:url||null,size:size||null});
+  });
+  callEdge({action:'add_movie',data:{movie:selectedMovie,links:links}}).then(function(res){
+    if(res&&res.success){
+      selectedMovie=null;
+      document.getElementById('selForm').style.display='none';
+      showToast('Movie saved to library!');
+    } else {
+      showToast('Error: '+(res&&res.error?res.error:'Unknown error'));
+    }
+    btn.disabled=false;btn.textContent='💾 SAVE TO LIBRARY';
+  }).catch(function(){showToast('Connection error!');btn.disabled=false;btn.textContent='💾 SAVE TO LIBRARY';});
+}
+
+function loadAdminList(){
+  document.getElementById('adminList').innerHTML='<div class="loader"><div class="spinner"></div></div>';
+  sbGet('movies','select=*,download_links(*)&order=created_at.desc').then(function(data){
+    if(!data||data.length===0){
+      document.getElementById('adminList').innerHTML='<div style="text-align:center;padding:2rem;color:var(--td);font-family:Rajdhani,sans-serif;letter-spacing:1px;">No movies in library yet.</div>';
+      return;
+    }
+    document.getElementById('adminList').innerHTML=data.map(function(m){
+      return '<div class="admin-item">'
+        +'<img src="'+(m.poster||'')+'" alt="" onerror="this.src=\'https://via.placeholder.com/36x52/0d0820/7b2fff?text=?\'">'
+        +'<div style="flex:1"><div class="admin-item-name">'+m.title+'</div>'
+        +'<div class="admin-item-meta">'+(m.year||'')+(m.rating?' · ⭐'+m.rating:'')+' · '+(m.download_links?m.download_links.length:0)+' links</div></div>'
+        +'<button class="btn-del" onclick="deleteMovie('+m.id+')">DELETE</button>'
+        +'</div>';
+    }).join('');
+  });
+}
+
+function deleteMovie(id){
+  if(!confirm('Delete this movie?'))return;
+  callEdge({action:'delete_movie',data:{movie_id:id}}).then(function(res){
+    if(res&&res.success){showToast('Deleted.');loadAdminList();if(currentCategory==='saved')loadSaved();}
+    else{showToast('Error deleting.');}
+  });
+}
+
+function changePassword(){
+  var cur=document.getElementById('curPass').value;
+  var nw=document.getElementById('newPass').value;
+  var conf=document.getElementById('confPass').value;
+  if(!cur||!nw||!conf){showToast('Fill all fields!');return;}
+  if(nw!==conf){showToast('Passwords do not match!');return;}
+  if(nw.length<6){showToast('Min 6 characters!');return;}
+  if(cur!==adminPass){showToast('Current password wrong!');return;}
+  callEdge({action:'change_password',data:{new_password:nw}}).then(function(res){
+    if(res&&res.success){
+      adminPass=nw;
+      showToast('Password updated!');
+      document.getElementById('curPass').value='';
+      document.getElementById('newPass').value='';
+      document.getElementById('confPass').value='';
+    } else {showToast('Error updating password.');}
+  });
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},3000);
+}
+
+loadMovies();
+</script>
+</body>
+</html>
