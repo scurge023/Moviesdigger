@@ -30,18 +30,20 @@ header{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,rgba(
 .header-actions{margin-left:auto;display:flex;gap:10px;align-items:center;}
 .btn-admin{background:linear-gradient(135deg,var(--ac),var(--ar));border:none;border-radius:6px;padding:8px 18px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all .3s;box-shadow:0 0 15px rgba(192,20,90,.3);}
 .btn-admin:hover{box-shadow:var(--gr);transform:translateY(-1px);}
+.btn-logout{background:rgba(123,47,255,.15);border:1px solid var(--border);border-radius:6px;padding:8px 14px;color:var(--tm);font-family:'Rajdhani',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s;display:none;}
+.btn-logout:hover{border-color:var(--ar);color:#e0356e;}
 
 .cat-bar{position:relative;z-index:1;background:rgba(11,7,28,.9);border-bottom:1px solid var(--border);padding:0 2rem;}
 .cat-inner{max-width:1400px;margin:0 auto;display:flex;gap:.5rem;overflow-x:auto;padding:12px 0;scrollbar-width:none;}
 .cat-inner::-webkit-scrollbar{display:none;}
-.cat-btn{background:rgba(26,15,60,.7);border:1px solid var(--border);border-radius:20px;padding:6px 18px;color:var(--tm);font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.5px;cursor:pointer;white-space:nowrap;transition:all .3s;}
+.cat-btn{background:rgba(26,15,60,.7);border:1px solid var(--border);border-radius:20px;padding:6px 18px;color:var(--tm);font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .3s;}
 .cat-btn:hover,.cat-btn.active{background:linear-gradient(135deg,var(--pm),var(--sb));border-color:var(--pb);color:#fff;box-shadow:var(--gp);}
 
 main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
 .sec-title{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--pb);letter-spacing:3px;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;}
 .sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
 
-.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.5rem;margin-bottom:3rem;}
+.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.5rem;margin-bottom:2rem;}
 .movie-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);animation:fadeUp .5s ease both;}
 .movie-card:hover{transform:translateY(-8px) scale(1.02);border-color:var(--pb);box-shadow:0 20px 40px rgba(0,0,0,.6),var(--gp);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
@@ -52,22 +54,21 @@ main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
 .card-rating{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.8);border-radius:4px;padding:3px 8px;font-size:.75rem;color:var(--star);font-weight:600;}
 .card-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,3,15,.9),transparent 60%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:12px;}
 .movie-card:hover .card-overlay{opacity:1;}
-.overlay-btn{width:100%;background:linear-gradient(135deg,var(--pb),var(--sbb));border:none;border-radius:6px;padding:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:1px;cursor:pointer;}
+.overlay-btn{width:100%;background:linear-gradient(135deg,var(--pb),var(--sbb));border:none;border-radius:6px;padding:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;}
 .card-info{padding:10px 12px;}
 .card-title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;color:var(--tp);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .card-meta{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--tm);}
 .card-genre{background:rgba(123,47,255,.15);border:1px solid rgba(123,47,255,.3);border-radius:3px;padding:1px 6px;font-size:.65rem;color:var(--pb);}
 
-/* LOADER */
-.loader{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem;gap:1rem;}
+.loader{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem;gap:1rem;grid-column:1/-1;}
 .spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--pb);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loader-text{font-family:'Orbitron',monospace;font-size:.75rem;color:var(--tm);letter-spacing:3px;}
 
 /* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--bg-panel);border:1px solid var(--border);border-radius:16px;max-width:800px;width:100%;max-height:90vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--pm) transparent;box-shadow:0 40px 80px rgba(0,0,0,.8),var(--gp);animation:modalIn .3s cubic-bezier(.34,1.56,.64,1);position:relative;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;}
+.overlay.open{display:flex;}
+.modal{background:var(--bg-panel);border:1px solid var(--border);border-radius:16px;max-width:820px;width:100%;max-height:90vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--pm) transparent;box-shadow:0 40px 80px rgba(0,0,0,.8),var(--gp);animation:modalIn .3s cubic-bezier(.34,1.56,.64,1);position:relative;}
 @keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
 .modal-close{position:absolute;top:1rem;right:1rem;background:rgba(123,47,255,.2);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;color:var(--tm);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10;}
 .modal-close:hover{background:var(--ar);color:#fff;}
@@ -84,12 +85,20 @@ main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
 .modal-desc{font-size:.85rem;color:var(--tm);line-height:1.7;}
 .modal-body{padding:1.5rem;}
 .modal-body h3{font-family:'Orbitron',monospace;font-size:.8rem;color:var(--pb);letter-spacing:2px;margin-bottom:1rem;}
+.dl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+.dl-btn{background:linear-gradient(135deg,rgba(26,15,60,.9),rgba(13,43,110,.5));border:1px solid var(--pb);border-radius:8px;padding:12px 16px;color:var(--tp);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:space-between;font-family:'Rajdhani',sans-serif;font-size:.9rem;width:100%;text-decoration:none;}
+.dl-btn:hover{box-shadow:var(--gp);background:linear-gradient(135deg,rgba(61,26,122,.5),rgba(26,82,204,.3));}
+.dl-label{font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;color:var(--pb);}
+.dl-size{font-size:.75rem;color:var(--tm);margin-top:2px;}
 .no-links{background:rgba(26,15,60,.4);border:1px dashed var(--border);border-radius:8px;padding:1.5rem;text-align:center;color:var(--td);font-family:'Rajdhani',sans-serif;font-size:.9rem;letter-spacing:1px;}
 
+/* LOGIN */
+.login-modal{background:var(--bg-panel);border:1px solid var(--pm);border-radius:16px;max-width:400px;width:100%;box-shadow:0 0 60px rgba(123,47,255,.4);animation:modalIn .3s ease;padding:2rem;}
+.login-title{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--ar);letter-spacing:3px;text-align:center;margin-bottom:1.5rem;}
+.login-err{background:rgba(192,20,90,.15);border:1px solid rgba(192,20,90,.4);border-radius:6px;padding:8px 12px;font-size:.8rem;color:#e0356e;margin-bottom:1rem;display:none;text-align:center;}
+
 /* ADMIN */
-.admin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:2rem;}
-.admin-overlay.open{display:flex;}
-.admin-panel{background:var(--bg-panel);border:1px solid var(--pm);border-radius:16px;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;box-shadow:0 0 60px rgba(123,47,255,.3);animation:modalIn .3s ease;}
+.admin-modal{background:var(--bg-panel);border:1px solid var(--pm);border-radius:16px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--pm) transparent;box-shadow:0 0 60px rgba(123,47,255,.3);animation:modalIn .3s ease;position:relative;}
 .admin-header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem;border-bottom:1px solid var(--border);}
 .admin-title{font-family:'Orbitron',monospace;font-size:1rem;color:var(--ar);letter-spacing:3px;}
 .admin-body{padding:1.5rem;}
@@ -101,29 +110,40 @@ main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
 .form-group{margin-bottom:1rem;}
 .form-group label{display:block;font-family:'Rajdhani',sans-serif;font-size:.8rem;color:var(--tm);letter-spacing:1px;margin-bottom:6px;}
 .form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(5,3,15,.8);border:1px solid var(--border);border-radius:6px;padding:10px 14px;color:var(--tp);font-family:'Exo 2',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--ar);}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--ar);}
 .form-group select option{background:var(--bg);}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 .btn-submit{width:100%;background:linear-gradient(135deg,var(--ac),var(--ar));border:none;border-radius:8px;padding:12px;color:#fff;font-family:'Orbitron',monospace;font-size:.8rem;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .3s;margin-top:.5rem;}
 .btn-submit:hover{box-shadow:var(--gr);transform:translateY(-1px);}
-.tmdb-search-results{display:flex;flex-direction:column;gap:8px;margin-top:1rem;max-height:300px;overflow-y:auto;}
-.tmdb-result{background:rgba(5,3,15,.6);border:1px solid var(--border);border-radius:8px;padding:10px;display:flex;gap:10px;cursor:pointer;transition:all .2s;}
-.tmdb-result:hover{border-color:var(--pb);background:rgba(26,15,60,.5);}
-.tmdb-result img{width:36px;height:52px;object-fit:cover;border-radius:4px;flex-shrink:0;}
-.tmdb-result-info .title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;}
-.tmdb-result-info .meta{font-size:.75rem;color:var(--tm);}
-.movie-list-admin{display:flex;flex-direction:column;gap:10px;}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.tmdb-results{display:flex;flex-direction:column;gap:8px;margin-top:1rem;max-height:280px;overflow-y:auto;}
+.tmdb-item{background:rgba(5,3,15,.6);border:1px solid var(--border);border-radius:8px;padding:10px;display:flex;gap:10px;cursor:pointer;transition:all .2s;}
+.tmdb-item:hover{border-color:var(--pb);background:rgba(26,15,60,.5);}
+.tmdb-item img{width:36px;height:52px;object-fit:cover;border-radius:4px;flex-shrink:0;}
+.tmdb-item .ti-title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;}
+.tmdb-item .ti-meta{font-size:.75rem;color:var(--tm);}
+.sel-preview{background:rgba(123,47,255,.1);border:1px solid rgba(123,47,255,.3);border-radius:8px;padding:12px;margin-bottom:1rem;display:flex;gap:12px;align-items:center;}
+.sel-preview img{width:50px;height:72px;object-fit:cover;border-radius:4px;}
+.sel-preview .sp-title{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;}
+.sel-preview .sp-meta{font-size:.75rem;color:var(--tm);}
+.link-row{display:flex;gap:8px;margin-bottom:8px;}
+.link-row input{flex:1;}
+.btn-add-link{background:rgba(123,47,255,.2);border:1px solid var(--pb);border-radius:6px;padding:8px 12px;color:var(--pb);font-size:.8rem;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.btn-add-link:hover{background:rgba(123,47,255,.4);}
+.admin-list{display:flex;flex-direction:column;gap:10px;}
 .admin-item{background:rgba(5,3,15,.6);border:1px solid var(--border);border-radius:8px;padding:12px;display:flex;align-items:center;gap:12px;}
 .admin-item img{width:36px;height:52px;object-fit:cover;border-radius:4px;flex-shrink:0;}
-.admin-item-name{flex:1;font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;}
-.btn-del{background:rgba(192,20,90,.2);border:1px solid var(--ar);border-radius:5px;padding:5px 12px;color:#e0356e;font-size:.8rem;cursor:pointer;transition:all .2s;}
+.admin-item-info{flex:1;}
+.admin-item-name{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:600;}
+.admin-item-meta{font-size:.75rem;color:var(--tm);}
+.btn-del{background:rgba(192,20,90,.2);border:1px solid var(--ar);border-radius:5px;padding:5px 12px;color:#e0356e;font-size:.8rem;cursor:pointer;transition:all .2s;flex-shrink:0;}
 .btn-del:hover{background:var(--ar);color:#fff;}
 
-.no-results{text-align:center;padding:4rem;color:var(--td);font-family:'Orbitron',monospace;font-size:.9rem;letter-spacing:2px;display:none;}
+.no-results{text-align:center;padding:4rem;color:var(--td);font-family:'Orbitron',monospace;font-size:.9rem;letter-spacing:2px;display:none;grid-column:1/-1;}
+.load-more-btn{display:none;margin:0 auto 3rem;background:linear-gradient(135deg,var(--pm),var(--sb));border:1px solid var(--pb);border-radius:8px;padding:12px 40px;color:#fff;font-family:'Orbitron',monospace;font-size:.75rem;letter-spacing:2px;cursor:pointer;transition:all .3s;}
+.load-more-btn:hover{box-shadow:var(--gp);transform:translateY(-2px);}
 .toast{position:fixed;bottom:2rem;right:2rem;background:linear-gradient(135deg,var(--pm),var(--sb));border:1px solid var(--pb);border-radius:8px;padding:12px 20px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:.9rem;z-index:9999;transform:translateX(200px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);box-shadow:var(--gp);}
 .toast.show{transform:translateX(0);opacity:1;}
-.load-more-btn{display:block;margin:0 auto 3rem;background:linear-gradient(135deg,var(--pm),var(--sb));border:1px solid var(--pb);border-radius:8px;padding:12px 40px;color:#fff;font-family:'Orbitron',monospace;font-size:.75rem;letter-spacing:2px;cursor:pointer;transition:all .3s;}
-.load-more-btn:hover{box-shadow:var(--gp);transform:translateY(-2px);}
 @media(max-width:600px){.header-inner{flex-wrap:wrap;height:auto;padding:1rem 0;gap:.8rem;}.search-bar{order:3;width:100%;max-width:100%;}.movie-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;}.modal-header{flex-direction:column;}.form-row{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -134,10 +154,11 @@ main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
     <div class="logo" onclick="goHome()">MOVIESDIGGER</div>
     <div class="search-bar">
       <span class="si">🔍</span>
-      <input type="text" id="searchInput" placeholder="Search movies, genres..." oninput="handleSearch()">
+      <input type="text" id="searchInput" placeholder="Search movies..." oninput="handleSearch()">
     </div>
     <div class="header-actions">
-      <button class="btn-admin" onclick="openAdmin()">⚙ ADMIN</button>
+      <button class="btn-logout" id="logoutBtn" onclick="logout()">LOGOUT</button>
+      <button class="btn-admin" id="adminBtn" onclick="openAdmin()">⚙ ADMIN</button>
     </div>
   </div>
 </header>
@@ -154,20 +175,21 @@ main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
     <button class="cat-btn" onclick="setCategory('10749',this)">❤️ Romance</button>
     <button class="cat-btn" onclick="setCategory('12',this)">🌍 Adventure</button>
     <button class="cat-btn" onclick="setCategory('878',this)">🚀 Sci-Fi</button>
+    <button class="cat-btn" onclick="setCategory('saved',this)">💾 My Library</button>
   </div>
 </div>
 
 <main>
   <div class="sec-title" id="sectionTitle">POPULAR MOVIES</div>
-  <div id="movieGrid" class="movie-grid"></div>
+  <div class="movie-grid" id="movieGrid"></div>
   <div class="no-results" id="noResults">NO MOVIES FOUND</div>
-  <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none">LOAD MORE</button>
+  <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">LOAD MORE</button>
 </main>
 
 <!-- Movie Modal -->
-<div class="modal-overlay" id="movieModal" onclick="if(event.target===this)closeModal()">
+<div class="overlay" id="movieOverlay" onclick="if(event.target===this)closeMovie()">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" onclick="closeMovie()">✕</button>
     <div class="modal-header">
       <div class="modal-poster"><img id="mPoster" src="" alt=""></div>
       <div class="modal-info">
@@ -179,51 +201,75 @@ main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
     </div>
     <div class="modal-body">
       <h3>⬇ DOWNLOAD OPTIONS</h3>
-      <div class="no-links">No download links added yet. Use Admin Panel to add links.</div>
+      <div id="dlOptions"></div>
     </div>
   </div>
 </div>
 
-<!-- Admin Panel -->
-<div class="admin-overlay" id="adminPanel" onclick="if(event.target===this)closeAdmin()">
-  <div class="admin-panel">
+<!-- Login Modal -->
+<div class="overlay" id="loginOverlay" onclick="if(event.target===this)closeLogin()">
+  <div class="login-modal">
+    <div class="login-title">🔐 ADMIN LOGIN</div>
+    <div class="login-err" id="loginErr">Invalid credentials</div>
+    <div class="form-group"><label>USERNAME</label><input type="text" id="loginUser" placeholder="admin"></div>
+    <div class="form-group"><label>PASSWORD</label><input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-submit" id="loginBtn" onclick="doLogin()">LOGIN</button>
+  </div>
+</div>
+
+<!-- Admin Modal -->
+<div class="overlay" id="adminOverlay" onclick="if(event.target===this)closeAdminPanel()">
+  <div class="admin-modal">
     <div class="admin-header">
       <div class="admin-title">⚙ ADMIN PANEL</div>
-      <button class="modal-close" style="position:static;" onclick="closeAdmin()">✕</button>
+      <button class="modal-close" style="position:static;" onclick="closeAdminPanel()">✕</button>
     </div>
     <div class="admin-body">
       <div class="admin-tabs">
-        <button class="tab-btn active" onclick="switchTab('search',this)">🔍 FIND MOVIE</button>
+        <button class="tab-btn active" onclick="switchTab('add',this)">🔍 ADD MOVIE</button>
         <button class="tab-btn" onclick="switchTab('manage',this)">📋 MANAGE</button>
+        <button class="tab-btn" onclick="switchTab('pass',this)">🔑 PASSWORD</button>
       </div>
-      <div class="tab-content active" id="tab-search">
-        <p style="font-size:.8rem;color:var(--tm);margin-bottom:1rem;">Search any movie — poster, description & rating auto-filled from TMDB.</p>
+
+      <!-- ADD MOVIE TAB -->
+      <div class="tab-content active" id="tab-add">
         <div class="form-group">
-          <label>SEARCH MOVIE</label>
-          <input type="text" id="tmdbQuery" placeholder="e.g. Inception, Avatar..." oninput="tmdbSearch()">
+          <label>SEARCH MOVIE ON TMDB</label>
+          <input type="text" id="tmdbQ" placeholder="e.g. Inception, Dune..." oninput="tmdbSearch()">
         </div>
-        <div class="tmdb-search-results" id="tmdbResults"></div>
-        <div id="selectedMovieForm" style="display:none;margin-top:1.2rem;">
-          <div style="background:rgba(123,47,255,.1);border:1px solid rgba(123,47,255,.3);border-radius:8px;padding:12px;margin-bottom:1rem;display:flex;gap:12px;align-items:center;">
-            <img id="selPoster" src="" style="width:50px;height:72px;object-fit:cover;border-radius:4px;">
-            <div>
-              <div id="selTitle" style="font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;"></div>
-              <div id="selMeta" style="font-size:.75rem;color:var(--tm);"></div>
+        <div class="tmdb-results" id="tmdbResults"></div>
+        <div id="selForm" style="display:none;margin-top:1rem;">
+          <div class="sel-preview">
+            <img id="selImg" src="" alt="">
+            <div><div class="sp-title" id="selName"></div><div class="sp-meta" id="selMeta"></div></div>
+          </div>
+          <label style="font-family:Rajdhani,sans-serif;font-size:.8rem;color:var(--tm);letter-spacing:1px;display:block;margin-bottom:8px;">DOWNLOAD LINKS (OPTIONAL)</label>
+          <div id="linkRows">
+            <div class="link-row">
+              <input type="text" placeholder="Label (e.g. 1080p Hindi)" class="link-label">
+              <input type="text" placeholder="URL" class="link-url">
+              <input type="text" placeholder="Size" class="link-size" style="max-width:90px;">
             </div>
           </div>
-          <div class="form-group">
-            <label>DOWNLOAD LINK (OPTIONAL)</label>
-            <input type="text" id="selLink" placeholder="https://... (leave blank for no link)">
-          </div>
-          <div class="form-group">
-            <label>LINK LABEL (e.g. 1080p Hindi)</label>
-            <input type="text" id="selLinkLabel" placeholder="1080p BluRay">
-          </div>
-          <button class="btn-submit" onclick="addSelectedMovie()">+ ADD TO LIBRARY</button>
+          <button class="btn-add-link" onclick="addLinkRow()">+ Add Link</button>
+          <button class="btn-submit" id="saveMovieBtn" onclick="saveMovie()" style="margin-top:1rem;">💾 SAVE TO LIBRARY</button>
         </div>
       </div>
+
+      <!-- MANAGE TAB -->
       <div class="tab-content" id="tab-manage">
-        <div class="movie-list-admin" id="adminList"></div>
+        <div class="admin-list" id="adminList">
+          <div class="loader"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <!-- PASSWORD TAB -->
+      <div class="tab-content" id="tab-pass">
+        <p style="font-size:.85rem;color:var(--tm);margin-bottom:1rem;">Change your admin password.</p>
+        <div class="form-group"><label>CURRENT PASSWORD</label><input type="password" id="curPass" placeholder="Current password"></div>
+        <div class="form-group"><label>NEW PASSWORD</label><input type="password" id="newPass" placeholder="New password"></div>
+        <div class="form-group"><label>CONFIRM NEW PASSWORD</label><input type="password" id="confPass" placeholder="Confirm new password"></div>
+        <button class="btn-submit" onclick="changePassword()">UPDATE PASSWORD</button>
       </div>
     </div>
   </div>
@@ -232,27 +278,41 @@ main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem;}
 <div class="toast" id="toast"></div>
 
 <script>
-var API_KEY='2da0a6830301894d5217292af487a077';
-var BASE='https://api.themoviedb.org/3';
+var SUPA_URL='https://rmtrkfzhlrwfjqwinrlh.supabase.co';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtdHJrZnpobHJ3Zmpxd2lucmxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMDU5NTAsImV4cCI6MjA5Mzg4MTk1MH0.Nzj2NmzxDZ6v8Sezn2Ib_l7J-g7XXWMSVqx5oEgdAOo';
+var TMDB_KEY='2da0a6830301894d5217292af487a077';
+var TMDB='https://api.themoviedb.org/3';
 var IMG='https://image.tmdb.org/t/p/w500';
-var IMG_ORIG='https://image.tmdb.org/t/p/original';
 
+var isLoggedIn=false;
 var currentCategory='popular';
 var currentPage=1;
 var totalPages=1;
 var isSearchMode=false;
-var searchQuery='';
-var customMovies=[];
-var selectedTMDB=null;
-var genreMap={};
 var searchTimer=null;
+var tmdbTimer=null;
+var selectedMovie=null;
+var genreMap={};
+
+// Supabase helpers
+function sbGet(table,params){
+  var url=SUPA_URL+'/rest/v1/'+table+'?'+params;
+  return fetch(url,{headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}}).then(function(r){return r.json();});
+}
+function sbPost(table,body){
+  return fetch(SUPA_URL+'/rest/v1/'+table,{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(body)}).then(function(r){return r.json();});
+}
+function sbDelete(table,id){
+  return fetch(SUPA_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'DELETE',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}});
+}
+function sbPatch(table,id,body){
+  return fetch(SUPA_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'PATCH',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
+}
 
 // Genre map
-fetch(BASE+'/genre/movie/list?api_key='+API_KEY)
+fetch(TMDB+'/genre/movie/list?api_key='+TMDB_KEY)
   .then(function(r){return r.json();})
-  .then(function(d){
-    if(d.genres)d.genres.forEach(function(g){genreMap[g.id]=g.name;});
-  });
+  .then(function(d){if(d.genres)d.genres.forEach(function(g){genreMap[g.id]=g.name;});});
 
 function goHome(){
   document.getElementById('searchInput').value='';
@@ -262,307 +322,372 @@ function goHome(){
 
 function setCategory(cat,btn){
   isSearchMode=false;
-  searchQuery='';
   document.getElementById('searchInput').value='';
   currentCategory=cat;
   currentPage=1;
   document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
   if(btn)btn.classList.add('active');
-  var titles={popular:'POPULAR MOVIES',top_rated:'TOP RATED',now_playing:'NOW PLAYING',upcoming:'UPCOMING','28':'ACTION','53':'THRILLER','27':'HORROR','10749':'ROMANCE','12':'ADVENTURE','878':'SCI-FI'};
+  var titles={popular:'POPULAR MOVIES',top_rated:'TOP RATED',now_playing:'NOW PLAYING',upcoming:'UPCOMING','28':'ACTION','53':'THRILLER','27':'HORROR','10749':'ROMANCE','12':'ADVENTURE','878':'SCI-FI',saved:'MY LIBRARY'};
   document.getElementById('sectionTitle').textContent=titles[cat]||'MOVIES';
   document.getElementById('movieGrid').innerHTML='';
-  loadMovies();
+  if(cat==='saved'){loadSaved();}else{loadMovies();}
 }
 
 function loadMovies(){
   showLoader();
-  var url;
   var genres=['28','53','27','10749','12','878'];
+  var url;
   if(genres.indexOf(currentCategory)!==-1){
-    url=BASE+'/discover/movie?api_key='+API_KEY+'&with_genres='+currentCategory+'&sort_by=popularity.desc&page='+currentPage;
+    url=TMDB+'/discover/movie?api_key='+TMDB_KEY+'&with_genres='+currentCategory+'&sort_by=popularity.desc&page='+currentPage;
   } else {
-    url=BASE+'/movie/'+currentCategory+'?api_key='+API_KEY+'&page='+currentPage;
+    url=TMDB+'/movie/'+currentCategory+'?api_key='+TMDB_KEY+'&page='+currentPage;
   }
-  fetch(url)
-    .then(function(r){return r.json();})
-    .then(function(data){
-      totalPages=data.total_pages||1;
-      renderMovies(data.results||[],currentPage>1);
-      document.getElementById('loadMoreBtn').style.display=currentPage<totalPages?'block':'none';
-    })
-    .catch(function(){showError();});
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    totalPages=d.total_pages||1;
+    renderTMDB(d.results||[],currentPage>1);
+    document.getElementById('loadMoreBtn').style.display=currentPage<totalPages?'block':'none';
+  }).catch(function(){showErr();});
+}
+
+function loadSaved(){
+  showLoader();
+  document.getElementById('loadMoreBtn').style.display='none';
+  sbGet('movies','select=*,download_links(*)&order=created_at.desc').then(function(data){
+    var grid=document.getElementById('movieGrid');
+    if(!data||data.length===0){
+      grid.innerHTML='';
+      document.getElementById('noResults').style.display='block';
+      return;
+    }
+    document.getElementById('noResults').style.display='none';
+    grid.innerHTML=data.map(function(m,i){
+      return buildCard('db'+m.id,m.poster||'',m.title,m.year||'',m.rating||'N/A',i*0.04);
+    }).join('');
+  });
 }
 
 function loadMore(){
   currentPage++;
-  loadMovies();
+  if(isSearchMode){
+    searchTMDB(document.getElementById('searchInput').value,currentPage);
+  } else {
+    loadMovies();
+  }
 }
 
 function handleSearch(){
   clearTimeout(searchTimer);
   var q=document.getElementById('searchInput').value.trim();
-  if(!q){
-    isSearchMode=false;
-    loadMovies();
-    return;
-  }
+  if(!q){isSearchMode=false;currentPage=1;loadMovies();return;}
   searchTimer=setTimeout(function(){
     isSearchMode=true;
-    searchQuery=q;
     currentPage=1;
     document.getElementById('sectionTitle').textContent='SEARCH: '+q.toUpperCase();
     document.getElementById('movieGrid').innerHTML='';
-    searchMovies(q,1);
+    searchTMDB(q,1);
   },400);
 }
 
-function searchMovies(q,page){
+function searchTMDB(q,page){
   showLoader();
-  fetch(BASE+'/search/movie?api_key='+API_KEY+'&query='+encodeURIComponent(q)+'&page='+page)
+  fetch(TMDB+'/search/movie?api_key='+TMDB_KEY+'&query='+encodeURIComponent(q)+'&page='+page)
     .then(function(r){return r.json();})
-    .then(function(data){
-      totalPages=data.total_pages||1;
-      renderMovies(data.results||[],page>1);
+    .then(function(d){
+      totalPages=d.total_pages||1;
+      renderTMDB(d.results||[],page>1);
       document.getElementById('loadMoreBtn').style.display=page<totalPages?'block':'none';
-    })
-    .catch(function(){showError();});
+    }).catch(showErr);
 }
 
 function showLoader(){
   if(currentPage===1){
-    document.getElementById('movieGrid').innerHTML='<div class="loader"><div class="spinner"></div><div class="loader-text">LOADING...</div></div>';
     document.getElementById('noResults').style.display='none';
+    document.getElementById('movieGrid').innerHTML='<div class="loader"><div class="spinner"></div><div class="loader-text">LOADING...</div></div>';
   }
 }
+function showErr(){document.getElementById('movieGrid').innerHTML='<div class="no-results" style="display:block;grid-column:1/-1">FAILED TO LOAD</div>';}
 
-function showError(){
-  document.getElementById('movieGrid').innerHTML='<div class="no-results" style="display:block">FAILED TO LOAD. CHECK CONNECTION.</div>';
-}
-
-function renderMovies(results,append){
+function renderTMDB(results,append){
   var grid=document.getElementById('movieGrid');
-  var noRes=document.getElementById('noResults');
-
-  // Merge custom movies at top if first page and not search
   var list=results.filter(function(m){return m.poster_path;});
-
   if(!append){
-    if(list.length===0&&customMovies.length===0){
-      grid.innerHTML='';
-      noRes.style.display='block';
-      return;
-    }
-    noRes.style.display='none';
-    var html='';
-    if(currentPage===1&&!isSearchMode){
-      customMovies.forEach(function(m,i){
-        html+=buildCard('c'+m.id,m.poster,m.title,m.year,'CUSTOM',m.rating||'N/A',i*0.03);
-      });
-    }
-    list.forEach(function(m,i){
-      var rating=m.vote_average?m.vote_average.toFixed(1):'N/A';
-      var year=m.release_date?m.release_date.substring(0,4):'';
-      var genre=m.genre_ids&&m.genre_ids[0]?genreMap[m.genre_ids[0]]||'Movie':'Movie';
-      html+=buildCard('t'+m.id,IMG+m.poster_path,m.title,year,genre,rating,(i+customMovies.length)*0.03);
-    });
-    grid.innerHTML=html;
+    if(list.length===0){grid.innerHTML='';document.getElementById('noResults').style.display='block';return;}
+    document.getElementById('noResults').style.display='none';
+    grid.innerHTML=list.map(function(m,i){
+      var r=m.vote_average?m.vote_average.toFixed(1):'N/A';
+      var y=m.release_date?m.release_date.substring(0,4):'';
+      return buildCard('t'+m.id,IMG+m.poster_path,m.title,y,r,i*0.04);
+    }).join('');
   } else {
-    noRes.style.display='none';
-    var html2='';
     list.forEach(function(m,i){
-      var rating=m.vote_average?m.vote_average.toFixed(1):'N/A';
-      var year=m.release_date?m.release_date.substring(0,4):'';
-      var genre=m.genre_ids&&m.genre_ids[0]?genreMap[m.genre_ids[0]]||'Movie':'Movie';
-      html2+=buildCard('t'+m.id,IMG+m.poster_path,m.title,year,genre,rating,i*0.03);
+      var r=m.vote_average?m.vote_average.toFixed(1):'N/A';
+      var y=m.release_date?m.release_date.substring(0,4):'';
+      grid.insertAdjacentHTML('beforeend',buildCard('t'+m.id,IMG+m.poster_path,m.title,y,r,i*0.02));
     });
-    grid.insertAdjacentHTML('beforeend',html2);
   }
 }
 
-function buildCard(id,poster,title,year,genre,rating,delay){
-  return '<div class="movie-card" style="animation-delay:'+delay+'s" onclick="openMovie(\''+id+'\',\''+escQ(title)+'\',\''+escQ(poster)+'\',\''+escQ(year)+'\',\''+escQ(genre)+'\',\''+rating+'\')">'
+function buildCard(id,poster,title,year,rating,delay){
+  var safe=String(title).replace(/'/g,'&#39;');
+  return '<div class="movie-card" style="animation-delay:'+delay+'s" onclick="openMovie(\''+id+'\')">'
     +'<div class="card-poster">'
-    +'<img src="'+poster+'" alt="'+escQ(title)+'" loading="lazy" onerror="this.src=\'https://via.placeholder.com/300x450/0d0820/7b2fff?text='+encodeURIComponent(title)+'\'">'
+    +'<img src="'+poster+'" alt="'+safe+'" loading="lazy" onerror="this.src=\'https://via.placeholder.com/300x450/0d0820/7b2fff?text=No+Poster\'">'
     +'<div class="card-quality">HD</div>'
     +'<div class="card-rating">⭐ '+rating+'</div>'
     +'<div class="card-overlay"><button class="overlay-btn">▶ VIEW DETAILS</button></div>'
     +'</div>'
-    +'<div class="card-info">'
-    +'<div class="card-title">'+title+'</div>'
-    +'<div class="card-meta"><span>'+year+'</span><span class="card-genre">'+genre.toUpperCase()+'</span></div>'
-    +'</div></div>';
+    +'<div class="card-info"><div class="card-title">'+title+'</div>'
+    +'<div class="card-meta"><span>'+year+'</span></div></div></div>';
 }
 
-function escQ(s){return String(s).replace(/'/g,"&#39;").replace(/"/g,'&quot;');}
-
-function openMovie(id,title,poster,year,genre,rating){
-  // Fetch full details from TMDB for non-custom
+function openMovie(id){
   if(id.charAt(0)==='t'){
     var tmdbId=id.substring(1);
-    fetch(BASE+'/movie/'+tmdbId+'?api_key='+API_KEY+'&append_to_response=credits')
+    fetch(TMDB+'/movie/'+tmdbId+'?api_key='+TMDB_KEY+'&append_to_response=credits')
       .then(function(r){return r.json();})
       .then(function(m){
-        var genres=m.genres?m.genres.map(function(g){return g.name;}).join(', '):'';
-        var runtime=m.runtime?Math.floor(m.runtime/60)+'h '+(m.runtime%60)+'m':'';
-        var director='';
-        if(m.credits&&m.credits.crew){
-          var d=m.credits.crew.find(function(c){return c.job==='Director';});
-          if(d)director=d.name;
-        }
-        var cast='';
-        if(m.credits&&m.credits.cast){
-          cast=m.credits.cast.slice(0,3).map(function(c){return c.name;}).join(', ');
-        }
-        var yr=m.release_date?m.release_date.substring(0,4):'';
-        var rat=m.vote_average?m.vote_average.toFixed(1):'N/A';
-        var posterUrl=m.poster_path?IMG+m.poster_path:'https://via.placeholder.com/300x450/0d0820/7b2fff?text='+encodeURIComponent(m.title||title);
-
-        document.getElementById('mPoster').src=posterUrl;
-        document.getElementById('mTitle').textContent=m.title||title;
-        document.getElementById('mRating').textContent='⭐ '+rat+' / 10   IMDb  ('+numberWithCommas(m.vote_count||0)+' votes)';
-        document.getElementById('mDesc').textContent=m.overview||'No description available.';
-        document.getElementById('mTags').innerHTML=
-          (yr?'<span class="tag">'+yr+'</span>':'')+
-          (runtime?'<span class="tag">'+runtime+'</span>':'')+
-          (genres?'<span class="tag red">'+genres+'</span>':'')+
-          (director?'<span class="tag blue">'+director+'</span>':'')+
-          (cast?'<span class="tag">'+cast+'</span>':'');
-        document.getElementById('movieModal').classList.add('open');
-        document.body.style.overflow='hidden';
+        // Check if saved in DB
+        sbGet('movies','select=*,download_links(*)&tmdb_id=eq.'+tmdbId).then(function(saved){
+          var links=[];
+          if(saved&&saved.length>0&&saved[0].download_links){links=saved[0].download_links;}
+          showMovieModal(m,links);
+        });
       });
   } else {
-    // Custom movie
-    var cid=parseInt(id.substring(1));
-    var cm=customMovies.find(function(m){return m.id===cid;});
-    if(!cm)return;
-    document.getElementById('mPoster').src=cm.poster;
-    document.getElementById('mTitle').textContent=cm.title;
-    document.getElementById('mRating').textContent='⭐ '+(cm.rating||'N/A')+' / 10';
-    document.getElementById('mDesc').textContent=cm.desc||'No description available.';
-    document.getElementById('mTags').innerHTML='<span class="tag">'+(cm.year||'')+'</span>';
-    document.getElementById('movieModal').classList.add('open');
-    document.body.style.overflow='hidden';
+    // DB movie
+    var dbId=id.substring(2);
+    sbGet('movies','select=*,download_links(*)&id=eq.'+dbId).then(function(data){
+      if(!data||!data[0])return;
+      var m=data[0];
+      // Build fake TMDB-like object
+      showMovieModal({
+        title:m.title,poster_path:null,_customPoster:m.poster,
+        overview:m.description||'',vote_average:parseFloat(m.rating)||0,
+        vote_count:0,release_date:m.year+'-01-01',genres:[],runtime:0,
+        credits:{crew:[],cast:[]}
+      },m.download_links||[]);
+    });
   }
 }
 
-function numberWithCommas(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function showMovieModal(m,links){
+  var poster=m._customPoster||(m.poster_path?IMG+m.poster_path:'https://via.placeholder.com/300x450/0d0820/7b2fff?text=No+Poster');
+  var yr=m.release_date?m.release_date.substring(0,4):'';
+  var rat=m.vote_average?m.vote_average.toFixed(1):'N/A';
+  var genres=m.genres?m.genres.map(function(g){return g.name;}).join(', '):'';
+  var runtime=m.runtime?Math.floor(m.runtime/60)+'h '+(m.runtime%60)+'m':'';
+  var director='',cast='';
+  if(m.credits&&m.credits.crew){var d=m.credits.crew.find(function(c){return c.job==='Director';});if(d)director=d.name;}
+  if(m.credits&&m.credits.cast){cast=m.credits.cast.slice(0,3).map(function(c){return c.name;}).join(', ');}
 
-function closeModal(){
-  document.getElementById('movieModal').classList.remove('open');
-  document.body.style.overflow='';
-}
+  document.getElementById('mPoster').src=poster;
+  document.getElementById('mTitle').textContent=m.title||'';
+  document.getElementById('mRating').textContent='⭐ '+rat+' / 10'+(m.vote_count?' ('+m.vote_count.toLocaleString()+' votes)':'');
+  document.getElementById('mDesc').textContent=m.overview||'No description available.';
+  document.getElementById('mTags').innerHTML=
+    (yr?'<span class="tag">'+yr+'</span>':'')+
+    (runtime?'<span class="tag">'+runtime+'</span>':'')+
+    (genres?'<span class="tag red">'+genres+'</span>':'')+
+    (director?'<span class="tag blue">'+director+'</span>':'')+
+    (cast?'<span class="tag">'+cast+'</span>':'');
 
-// ADMIN
-var tmdbSearchTimer=null;
-function tmdbSearch(){
-  clearTimeout(tmdbSearchTimer);
-  var q=document.getElementById('tmdbQuery').value.trim();
-  document.getElementById('selectedMovieForm').style.display='none';
-  selectedTMDB=null;
-  if(!q){document.getElementById('tmdbResults').innerHTML='';return;}
-  tmdbSearchTimer=setTimeout(function(){
-    fetch(BASE+'/search/movie?api_key='+API_KEY+'&query='+encodeURIComponent(q))
-      .then(function(r){return r.json();})
-      .then(function(data){
-        var results=data.results||[];
-        document.getElementById('tmdbResults').innerHTML=results.slice(0,6).map(function(m){
-          var yr=m.release_date?m.release_date.substring(0,4):'';
-          var rat=m.vote_average?m.vote_average.toFixed(1):'';
-          var poster=m.poster_path?IMG+m.poster_path:'https://via.placeholder.com/36x52/0d0820/7b2fff?text=?';
-          return '<div class="tmdb-result" onclick="selectTMDB('+m.id+',\''+escQ(m.title)+'\',\''+escQ(poster)+'\',\''+yr+'\',\''+rat+'\',\''+escQ(m.overview||'')+'\')">'+
-            '<img src="'+poster+'" alt="">'+
-            '<div class="tmdb-result-info">'+
-            '<div class="title">'+m.title+'</div>'+
-            '<div class="meta">'+yr+(rat?' · ⭐'+rat:'')+' · '+numberWithCommas(m.vote_count||0)+' votes</div>'+
-            '</div></div>';
-        }).join('');
-      });
-  },300);
-}
-
-function selectTMDB(id,title,poster,year,rating,overview){
-  selectedTMDB={id:id,title:title,poster:poster,year:year,rating:rating,desc:overview};
-  document.getElementById('selPoster').src=poster;
-  document.getElementById('selTitle').textContent=title;
-  document.getElementById('selMeta').textContent=year+(rating?' · ⭐'+rating:'');
-  document.getElementById('selLink').value='';
-  document.getElementById('selLinkLabel').value='';
-  document.getElementById('selectedMovieForm').style.display='block';
-  document.getElementById('tmdbResults').innerHTML='';
-  document.getElementById('tmdbQuery').value='';
-}
-
-function addSelectedMovie(){
-  if(!selectedTMDB){showToast('Select a movie first!');return;}
-  var link=document.getElementById('selLink').value.trim();
-  var label=document.getElementById('selLinkLabel').value.trim()||'Download';
-  var newId=Date.now();
-  customMovies.unshift({
-    id:newId,
-    title:selectedTMDB.title,
-    poster:selectedTMDB.poster,
-    year:selectedTMDB.year,
-    rating:selectedTMDB.rating,
-    desc:selectedTMDB.desc,
-    link:link||null,
-    linkLabel:label
-  });
-  selectedTMDB=null;
-  document.getElementById('selectedMovieForm').style.display='none';
-  if(!isSearchMode){
-    var grid=document.getElementById('movieGrid');
-    var html=buildCard('c'+customMovies[0].id,customMovies[0].poster,customMovies[0].title,customMovies[0].year,'CUSTOM',customMovies[0].rating||'N/A',0);
-    grid.insertAdjacentHTML('afterbegin',html);
+  if(links&&links.length>0){
+    document.getElementById('dlOptions').innerHTML='<div class="dl-grid">'+links.map(function(l){
+      return l.url
+        ?'<a class="dl-btn" href="'+l.url+'" target="_blank" rel="noopener"><span><div class="dl-label">'+l.label+'</div><div class="dl-size">'+(l.size||'')+'</div></span><span>⬇</span></a>'
+        :'<div class="dl-btn" style="cursor:default"><span><div class="dl-label">'+l.label+'</div><div class="dl-size">'+(l.size||'')+'</div></span><span>🔒</span></div>';
+    }).join('')+'</div>';
+  } else {
+    document.getElementById('dlOptions').innerHTML='<div class="no-links">No download links added yet.</div>';
   }
-  showToast('Movie added!');
-}
-
-function openAdmin(){
-  renderAdminList();
-  document.getElementById('adminPanel').classList.add('open');
+  document.getElementById('movieOverlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
 
-function closeAdmin(){
-  document.getElementById('adminPanel').classList.remove('open');
-  document.body.style.overflow='';
+function closeMovie(){document.getElementById('movieOverlay').classList.remove('open');document.body.style.overflow='';}
+
+// LOGIN
+function openAdmin(){
+  if(isLoggedIn){openAdminPanel();}else{openLogin();}
 }
+function openLogin(){document.getElementById('loginOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeLogin(){document.getElementById('loginOverlay').classList.remove('open');document.body.style.overflow='';}
+
+function doLogin(){
+  var user=document.getElementById('loginUser').value.trim();
+  var pass=document.getElementById('loginPass').value;
+  var btn=document.getElementById('loginBtn');
+  var err=document.getElementById('loginErr');
+  if(!user||!pass){err.textContent='Enter username and password.';err.style.display='block';return;}
+  btn.disabled=true;btn.textContent='CHECKING...';
+  sbGet('admin_users','select=*&username=eq.'+encodeURIComponent(user)+'&password=eq.'+encodeURIComponent(pass))
+    .then(function(data){
+      if(data&&data.length>0){
+        isLoggedIn=true;
+        document.getElementById('logoutBtn').style.display='block';
+        err.style.display='none';
+        document.getElementById('loginUser').value='';
+        document.getElementById('loginPass').value='';
+        closeLogin();
+        openAdminPanel();
+        showToast('Welcome back, '+user+'!');
+      } else {
+        err.textContent='Invalid username or password.';
+        err.style.display='block';
+      }
+      btn.disabled=false;btn.textContent='LOGIN';
+    }).catch(function(){
+      err.textContent='Connection error. Try again.';
+      err.style.display='block';
+      btn.disabled=false;btn.textContent='LOGIN';
+    });
+}
+
+function logout(){
+  isLoggedIn=false;
+  document.getElementById('logoutBtn').style.display='none';
+  showToast('Logged out.');
+}
+
+// ADMIN PANEL
+function openAdminPanel(){document.getElementById('adminOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeAdminPanel(){document.getElementById('adminOverlay').classList.remove('open');document.body.style.overflow='';}
 
 function switchTab(tab,btn){
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
   btn.classList.add('active');
   document.getElementById('tab-'+tab).classList.add('active');
-  if(tab==='manage')renderAdminList();
+  if(tab==='manage')loadAdminList();
 }
 
-function renderAdminList(){
-  if(customMovies.length===0){
-    document.getElementById('adminList').innerHTML='<div style="text-align:center;padding:2rem;color:var(--td);font-family:Rajdhani,sans-serif;">No custom movies added yet.</div>';
-    return;
-  }
-  document.getElementById('adminList').innerHTML=customMovies.map(function(m){
-    return '<div class="admin-item">'
-      +'<img src="'+m.poster+'" alt="">'
-      +'<div><div class="admin-item-name">'+m.title+'</div>'
-      +'<div style="font-size:.75rem;color:var(--tm)">'+m.year+(m.rating?' · ⭐'+m.rating:'')+
-      (m.link?'<br><span style="color:#6ea8ff;font-size:.7rem">🔗 '+m.linkLabel+'</span>':'')+'</div></div>'
-      +'<button class="btn-del" onclick="deleteCustom('+m.id+')">DELETE</button>'
-      +'</div>';
-  }).join('');
+// TMDB search in admin
+function tmdbSearch(){
+  clearTimeout(tmdbTimer);
+  var q=document.getElementById('tmdbQ').value.trim();
+  document.getElementById('selForm').style.display='none';
+  selectedMovie=null;
+  if(!q){document.getElementById('tmdbResults').innerHTML='';return;}
+  tmdbTimer=setTimeout(function(){
+    fetch(TMDB+'/search/movie?api_key='+TMDB_KEY+'&query='+encodeURIComponent(q))
+      .then(function(r){return r.json();})
+      .then(function(d){
+        document.getElementById('tmdbResults').innerHTML=(d.results||[]).slice(0,6).map(function(m){
+          var yr=m.release_date?m.release_date.substring(0,4):'';
+          var rat=m.vote_average?m.vote_average.toFixed(1):'';
+          var poster=m.poster_path?IMG+m.poster_path:'https://via.placeholder.com/36x52/0d0820/7b2fff?text=?';
+          return '<div class="tmdb-item" onclick="selectMovie('+m.id+',\''+esc(m.title)+'\',\''+esc(poster)+'\',\''+yr+'\',\''+rat+'\',\''+esc(m.overview||'')+'\',\''+esc(m.tmdb_id||String(m.id))+'\')">'
+            +'<img src="'+poster+'" alt="">'
+            +'<div><div class="ti-title">'+m.title+'</div>'
+            +'<div class="ti-meta">'+yr+(rat?' · ⭐'+rat:'')+' · '+((m.vote_count||0)).toLocaleString()+' votes</div></div></div>';
+        }).join('');
+      });
+  },300);
 }
 
-function deleteCustom(id){
-  customMovies=customMovies.filter(function(m){return m.id!==id;});
-  renderAdminList();
-  if(!isSearchMode)loadMovies();
-  showToast('Removed.');
+function esc(s){return String(s).replace(/'/g,"&#39;").replace(/\n/g,' ');}
+
+function selectMovie(id,title,poster,year,rating,desc,tmdbId){
+  selectedMovie={tmdb_id:String(id),title:title,poster:poster,year:year,rating:rating,description:desc};
+  document.getElementById('selImg').src=poster;
+  document.getElementById('selName').textContent=title;
+  document.getElementById('selMeta').textContent=year+(rating?' · ⭐'+rating:'');
+  document.getElementById('linkRows').innerHTML='<div class="link-row"><input type="text" placeholder="Label (e.g. 1080p Hindi)" class="link-label"><input type="text" placeholder="URL" class="link-url"><input type="text" placeholder="Size" class="link-size" style="max-width:90px;"></div>';
+  document.getElementById('selForm').style.display='block';
+  document.getElementById('tmdbResults').innerHTML='';
+  document.getElementById('tmdbQ').value='';
+}
+
+function addLinkRow(){
+  document.getElementById('linkRows').insertAdjacentHTML('beforeend',
+    '<div class="link-row"><input type="text" placeholder="Label" class="link-label"><input type="text" placeholder="URL" class="link-url"><input type="text" placeholder="Size" class="link-size" style="max-width:90px;"></div>');
+}
+
+function saveMovie(){
+  if(!selectedMovie){showToast('Select a movie first!');return;}
+  var btn=document.getElementById('saveMovieBtn');
+  btn.disabled=true;btn.textContent='SAVING...';
+
+  sbPost('movies',{
+    title:selectedMovie.title,poster:selectedMovie.poster,
+    year:selectedMovie.year,rating:selectedMovie.rating,
+    description:selectedMovie.description,tmdb_id:selectedMovie.tmdb_id
+  }).then(function(data){
+    if(!data||!data[0]){showToast('Error saving!');btn.disabled=false;btn.textContent='💾 SAVE TO LIBRARY';return;}
+    var movieId=data[0].id;
+    var rows=document.querySelectorAll('#linkRows .link-row');
+    var links=[];
+    rows.forEach(function(row){
+      var label=row.querySelector('.link-label').value.trim();
+      var url=row.querySelector('.link-url').value.trim();
+      var size=row.querySelector('.link-size').value.trim();
+      if(label)links.push({movie_id:movieId,label:label,url:url||null,size:size||null});
+    });
+    if(links.length>0){
+      Promise.all(links.map(function(l){return sbPost('download_links',l);})).then(function(){
+        done();
+      });
+    } else {done();}
+    function done(){
+      selectedMovie=null;
+      document.getElementById('selForm').style.display='none';
+      btn.disabled=false;btn.textContent='💾 SAVE TO LIBRARY';
+      showToast('Movie saved to library!');
+    }
+  }).catch(function(){showToast('Error!');btn.disabled=false;btn.textContent='💾 SAVE TO LIBRARY';});
+}
+
+function loadAdminList(){
+  document.getElementById('adminList').innerHTML='<div class="loader"><div class="spinner"></div></div>';
+  sbGet('movies','select=*,download_links(*)&order=created_at.desc').then(function(data){
+    if(!data||data.length===0){
+      document.getElementById('adminList').innerHTML='<div style="text-align:center;padding:2rem;color:var(--td);font-family:Rajdhani,sans-serif;">No movies in library yet.</div>';
+      return;
+    }
+    document.getElementById('adminList').innerHTML=data.map(function(m){
+      return '<div class="admin-item">'
+        +'<img src="'+(m.poster||'')+'" alt="" onerror="this.src=\'https://via.placeholder.com/36x52/0d0820/7b2fff?text=?\'">'
+        +'<div class="admin-item-info">'
+        +'<div class="admin-item-name">'+m.title+'</div>'
+        +'<div class="admin-item-meta">'+(m.year||'')+(m.rating?' · ⭐'+m.rating:'')+' · '+(m.download_links?m.download_links.length:0)+' links</div>'
+        +'</div>'
+        +'<button class="btn-del" onclick="deleteMovie('+m.id+')">DELETE</button>'
+        +'</div>';
+    }).join('');
+  });
+}
+
+function deleteMovie(id){
+  if(!confirm('Delete this movie?'))return;
+  sbDelete('movies',id).then(function(){
+    showToast('Deleted.');
+    loadAdminList();
+    if(currentCategory==='saved')loadSaved();
+  });
+}
+
+function changePassword(){
+  var cur=document.getElementById('curPass').value;
+  var nw=document.getElementById('newPass').value;
+  var conf=document.getElementById('confPass').value;
+  if(!cur||!nw||!conf){showToast('Fill all fields!');return;}
+  if(nw!==conf){showToast('New passwords do not match!');return;}
+  if(nw.length<6){showToast('Password min 6 characters!');return;}
+  sbGet('admin_users','select=*&password=eq.'+encodeURIComponent(cur))
+    .then(function(data){
+      if(!data||data.length===0){showToast('Current password incorrect!');return;}
+      return sbPatch('admin_users',data[0].id,{password:nw}).then(function(){
+        showToast('Password updated!');
+        document.getElementById('curPass').value='';
+        document.getElementById('newPass').value='';
+        document.getElementById('confPass').value='';
+      });
+    });
 }
 
 function showToast(msg){
   var t=document.getElementById('toast');
-  t.textContent=msg;
-  t.classList.add('show');
+  t.textContent=msg;t.classList.add('show');
   setTimeout(function(){t.classList.remove('show');},3000);
 }
 
