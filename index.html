@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sacred Threads — Premium Raksha Bandhan Collection</title>
+<title>Sacred Rakhi — Premium Raksha Bandhan Collection</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,6 +27,7 @@
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
+  html,body{overflow-x:hidden;max-width:100%;}
   body{
     margin:0;
     background:var(--warm-white);
@@ -62,23 +63,52 @@
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
+
+  /* ============ RAKSHA BANDHAN COUNTDOWN ============ */
+  .rb-countdown{
+    background:linear-gradient(120deg,var(--maroon-dark),var(--maroon) 65%,#8a2a37);
+    color:#fff;
+  }
+  .rb-countdown-inner{
+    display:flex;align-items:center;justify-content:center;gap:22px;
+    padding:11px 20px;flex-wrap:wrap;
+  }
+  .rb-label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gold);flex-shrink:0;}
+  .rb-label-text{color:#fff;font-weight:500;}
+  .rb-label-text strong{color:var(--gold);font-weight:700;}
+  .rb-timer{display:flex;align-items:center;gap:8px;}
+  .rb-unit{
+    display:flex;flex-direction:column;align-items:center;
+    background:rgba(255,255,255,0.12);border-radius:8px;
+    padding:5px 9px;min-width:40px;
+  }
+  .rb-unit span{font-family:'Fraunces';font-size:16px;font-weight:600;line-height:1;}
+  .rb-unit small{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,0.7);margin-top:2px;}
+  @media (max-width:560px){
+    .rb-countdown-inner{gap:10px;padding:10px 16px;}
+    .rb-label{width:100%;justify-content:center;}
+    .rb-timer{gap:6px;}
+    .rb-unit{min-width:34px;padding:4px 6px;}
+    .rb-unit span{font-size:14px;}
+  }
   .nav-row{
     display:flex;align-items:center;justify-content:space-between;
-    padding:14px 20px;max-width:1200px;margin:0 auto;
+    padding:14px 20px;max-width:1200px;margin:0 auto;gap:8px;
   }
-  .nav-side{display:flex;align-items:center;gap:16px;min-width:96px;}
+  .nav-side{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
   .icon-btn{
     background:none;border:none;padding:8px;border-radius:10px;
     display:flex;align-items:center;justify-content:center;
     color:var(--charcoal);transition:background .2s var(--ease);
-    position:relative;
+    position:relative;flex-shrink:0;
   }
   .icon-btn:hover{background:rgba(122,31,43,0.06);}
   .logo{
-    display:flex;align-items:center;gap:9px;
-    font-family:'Fraunces',serif;font-weight:500;font-size:22px;color:var(--maroon-dark);
+    display:flex;align-items:center;gap:6px;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:500;font-size:clamp(16px,4.6vw,22px);color:var(--maroon-dark);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1 1 auto;
   }
-  .logo svg{width:26px;height:26px;}
+  .logo svg{width:22px;height:22px;flex-shrink:0;}
   .cart-badge{
     position:absolute;top:2px;right:2px;
     background:var(--maroon);color:#fff;
@@ -225,6 +255,11 @@
     color:var(--maroon);z-index:2;transition:transform .2s var(--ease);
   }
   .wish-btn:hover{transform:scale(1.1);}
+  .wish-btn.active{color:#fff;background:var(--maroon);}
+  .pp-wish-btn{
+    position:static;width:52px;height:52px;flex:none;
+    border:1.5px solid var(--line);background:#fff;
+  }
   .product-card h3{font-family:'Inter';font-size:15px;font-weight:700;line-height:1.35;margin-bottom:4px;}
   .stars{color:var(--gold);font-size:13px;letter-spacing:1px;margin-bottom:6px;}
   .stars span{color:var(--charcoal-soft);font-size:12px;letter-spacing:0;margin-left:4px;}
@@ -233,6 +268,18 @@
   .price-now{font-size:18px;font-weight:800;color:var(--maroon-dark);}
   .price-was{font-size:13px;color:var(--charcoal-soft);text-decoration:line-through;}
   .product-actions{display:flex;gap:8px;margin-top:auto;}
+
+  /* ============ URGENCY SIGNALS ============ */
+  .urgency-row{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+  .urgency-item{
+    display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;
+    color:var(--charcoal-soft);
+  }
+  .urgency-item.fire{color:var(--saffron);}
+  .urgency-item.fire svg{color:var(--saffron);flex-shrink:0;}
+  .urgency-item.low-stock{color:#B23A3A;}
+  .urgency-row.lg{margin:16px 0;gap:8px;}
+  .urgency-row.lg .urgency-item{font-size:13px;}
 
   /* ============ CATEGORY ============ */
   .cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;}
@@ -267,7 +314,7 @@
   .footer-brand .logo{color:#fff;}
   .footer-brand p{font-size:13.5px;color:#B8AC9D;line-height:1.6;margin-top:12px;max-width:260px;}
   .footer-col h5{font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:#B8AC9D;margin-bottom:16px;}
-  .footer-col a{display:block;font-size:13.5px;color:#EAE3D8;margin-bottom:11px;transition:color .2s var(--ease);}
+  .footer-col a{display:block;font-size:13.5px;color:#EAE3D8;margin-bottom:11px;transition:color .2s var(--ease);overflow-wrap:anywhere;}
   .footer-col a:hover{color:var(--gold);}
   .social-row{display:flex;gap:10px;margin-top:18px;}
   .social-row a{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;}
@@ -348,7 +395,7 @@
   .pp-dots{display:flex;gap:6px;justify-content:center;margin-top:14px;}
   .pp-dot{width:7px;height:7px;border-radius:50%;background:var(--line);border:none;padding:0;transition:all .25s var(--ease);}
   .pp-dot.active{background:var(--maroon);width:20px;border-radius:4px;}
-  .pp-thumbs{display:flex;gap:10px;margin-top:14px;}
+  .pp-thumbs{display:flex;gap:10px;margin-top:14px;overflow-x:auto;padding-bottom:2px;}
   .pp-thumb{
     width:64px;height:64px;border-radius:10px;border:2px solid transparent;
     background:linear-gradient(150deg,#F6ECDC,#EFDCB8);
@@ -370,6 +417,21 @@
   .pp-perks{display:flex;flex-direction:column;gap:12px;margin-top:26px;padding-top:26px;border-top:1px solid var(--line);}
   .pp-perk{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--charcoal-soft);}
   .pp-perk svg{color:var(--maroon);flex-shrink:0;}
+
+  /* ============ PINCODE CHECKER ============ */
+  .pincode-check{margin-top:22px;padding:18px;border:1px solid var(--line);border-radius:12px;background:#fff;}
+  .pincode-check label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--charcoal-soft);margin-bottom:10px;}
+  .pincode-row{display:flex;gap:10px;}
+  .pincode-row input{
+    flex:1;padding:11px 14px;border-radius:10px;border:1.5px solid var(--line);
+    font-size:14px;font-family:inherit;
+  }
+  .pincode-row input:focus{border-color:var(--maroon);}
+  .pincode-row input.invalid{border-color:#B23A3A;background:#FCF3F3;}
+  .pincode-result{margin-top:12px;font-size:13.5px;display:none;}
+  .pincode-result.show{display:flex;align-items:center;gap:8px;}
+  .pincode-result.ok{color:var(--success);}
+  .pincode-result.err{color:#B23A3A;}
   .pp-desc-section{margin-top:52px;padding-top:40px;border-top:1px solid var(--line);}
   .pp-desc-section h3{font-size:20px;margin-bottom:16px;}
   .pp-desc-section p{font-size:14.5px;line-height:1.75;color:var(--charcoal-soft);max-width:680px;margin-bottom:20px;}
@@ -445,10 +507,72 @@
   .payment-modal h3{font-size:19px;margin-bottom:6px;}
   .pm-sub{font-size:13.5px;color:var(--charcoal-soft);margin:0 0 18px;}
   .pay-amount{font-family:'Fraunces';font-size:36px;font-weight:500;color:var(--maroon-dark);margin-bottom:10px;}
-  .upi-id-row{font-size:13px;color:var(--charcoal-soft);margin-bottom:22px;}
+  .upi-id-row{font-size:13px;color:var(--charcoal-soft);margin-bottom:22px;overflow-wrap:anywhere;}
   .upi-id-row b{color:var(--charcoal);}
   .payment-modal .btn{margin-bottom:10px;}
   .pm-cancel{background:none;border:none;color:var(--charcoal-soft);font-size:13px;text-decoration:underline;}
+
+  /* ============ WISHLIST PAGE ============ */
+  .wishlist-overlay{
+    position:fixed;inset:0;z-index:65;background:var(--warm-white);
+    transform:translateY(100%);transition:transform .38s var(--ease);
+    overflow-y:auto;
+  }
+  .wishlist-overlay.open{transform:translateY(0);}
+  .wishlist-content{max-width:1100px;margin:0 auto;padding:32px 20px 70px;}
+  .wishlist-content h2{font-size:26px;margin-bottom:24px;}
+  .wishlist-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .wishlist-empty{padding:80px 20px;text-align:center;color:var(--charcoal-soft);}
+  .wishlist-empty p:first-child{font-family:'Fraunces';font-size:20px;color:var(--charcoal);margin-bottom:8px;}
+  @media (max-width:1024px){.wishlist-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:640px){.wishlist-grid{grid-template-columns:repeat(2,1fr);}}
+
+  /* ============ ORDER CONFIRMATION ============ */
+  .confirm-overlay{
+    position:fixed;inset:0;z-index:70;background:var(--warm-white);
+    transform:translateY(100%);transition:transform .38s var(--ease);
+    overflow-y:auto;
+  }
+  .confirm-overlay.open{transform:translateY(0);}
+  .confirm-content{max-width:820px;margin:0 auto;padding:52px 20px 70px;}
+  .confirm-head{text-align:center;margin-bottom:44px;}
+  .confirm-check{
+    width:64px;height:64px;border-radius:50%;background:var(--success);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
+  }
+  .confirm-head h1{font-size:clamp(24px,3vw,32px);margin-bottom:10px;}
+  .confirm-head p{color:var(--charcoal-soft);font-size:14.5px;overflow-wrap:anywhere;}
+  .confirm-head .order-id{font-weight:700;color:var(--charcoal);}
+
+  .track-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);padding:32px 28px;margin-bottom:28px;}
+  .track-card h3{font-size:16px;margin-bottom:30px;}
+  .progress-bar{display:flex;align-items:flex-start;}
+  .progress-step{flex:1;text-align:center;position:relative;}
+  .progress-step .step-circle{
+    width:34px;height:34px;border-radius:50%;background:#EDE6D9;color:var(--charcoal-soft);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 10px;position:relative;z-index:1;
+    transition:background .3s var(--ease),color .3s var(--ease);
+  }
+  .progress-step.done .step-circle{background:var(--maroon);color:#fff;}
+  .progress-step .step-line{
+    position:absolute;top:17px;left:-50%;width:100%;height:2px;background:#EDE6D9;z-index:0;
+  }
+  .progress-step:first-child .step-line{display:none;}
+  .progress-step.done .step-line{background:var(--maroon);}
+  .progress-step .step-label{font-size:12.5px;font-weight:700;color:var(--charcoal);margin-bottom:3px;}
+  .progress-step .step-date{font-size:11.5px;color:var(--charcoal-soft);}
+
+  .confirm-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .confirm-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);padding:22px;}
+  .confirm-card h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--charcoal-soft);margin-bottom:14px;}
+  .confirm-card p{font-size:13.5px;line-height:1.7;color:var(--charcoal);margin:0;}
+  .confirm-items .ck-item{font-size:13.5px;}
+  .confirm-actions{display:flex;gap:12px;margin-top:30px;}
+  @media (max-width:700px){
+    .confirm-grid{grid-template-columns:1fr;}
+    .progress-step .step-label{font-size:11px;}
+    .confirm-actions{flex-direction:column;}
+  }
 </style>
 </head>
 <body>
@@ -463,11 +587,15 @@
     </div>
     <a href="#" class="logo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c-2 2.5-2 5-2 5s2 .5 2 3-2 3-2 3 0 2.5 2 5c2-2.5 2-5 2-5s-2-.5-2-3 2-3 2-3 0-2.5-2-5z"/><path d="M4 8c1.5 1 2.5 2.5 3 4M20 8c-1.5 1-2.5 2.5-3 4"/></svg>
-      Sacred&nbsp;Threads
+      Sacred&nbsp;Rakhi
     </a>
     <div class="nav-side" style="justify-content:flex-end;">
       <button class="icon-btn" id="searchBtn" aria-label="Search">
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="icon-btn" id="wishlistBtn" aria-label="Open wishlist">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.35-9.5-8.5C.7 8.9 2.6 5 6.2 5c2 0 3.4 1 4.8 2.5C12.4 6 13.8 5 15.8 5c3.6 0 5.5 3.9 3.7 7.5C19 16.65 12 21 12 21z"/></svg>
+        <span class="cart-badge" id="wishlistBadge">0</span>
       </button>
       <button class="icon-btn" id="cartBtn" aria-label="Open cart">
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M1 1h4l2.6 12.6a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
@@ -481,6 +609,19 @@
     </div>
   </div>
 </header>
+
+<!-- ============ RAKSHA BANDHAN COUNTDOWN ============ -->
+<div class="rb-countdown">
+  <div class="wrap rb-countdown-inner">
+    <span class="rb-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.35-9.5-8.5C.7 8.9 2.6 5 6.2 5c2 0 3.4 1 4.8 2.5C12.4 6 13.8 5 15.8 5c3.6 0 5.5 3.9 3.7 7.5C19 16.65 12 21 12 21z"/></svg><span class="rb-label-text">Raksha Bandhan is coming — <strong>28th August</strong></span></span>
+    <div class="rb-timer" id="rbTimer">
+      <div class="rb-unit"><span id="rbDays">00</span><small>Days</small></div>
+      <div class="rb-unit"><span id="rbHours">00</span><small>Hrs</small></div>
+      <div class="rb-unit"><span id="rbMinutes">00</span><small>Min</small></div>
+      <div class="rb-unit"><span id="rbSeconds">00</span><small>Sec</small></div>
+    </div>
+  </div>
+</div>
 
 <!-- ============ CATEGORY DRAWER ============ -->
 <div class="overlay" id="overlay"></div>
@@ -604,6 +745,31 @@
   </div>
 </div>
 
+<!-- ============ WISHLIST PAGE ============ -->
+<div class="wishlist-overlay" id="wishlistOverlay">
+  <div class="pp-topbar">
+    <button class="icon-btn" id="wishlistBack" aria-label="Back to shopping">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <span>Back to shopping</span>
+  </div>
+  <div class="wishlist-content">
+    <h2>Your Wishlist</h2>
+    <div id="wishlistGrid"></div>
+  </div>
+</div>
+
+<!-- ============ ORDER CONFIRMATION PAGE ============ -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="pp-topbar">
+    <button class="icon-btn" id="confirmBack" aria-label="Close">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <span>Continue shopping</span>
+  </div>
+  <div class="confirm-content" id="confirmContent"></div>
+</div>
+
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="wrap hero-center">
@@ -675,7 +841,7 @@
       <div class="footer-brand">
         <a href="#" class="logo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c-2 2.5-2 5-2 5s2 .5 2 3-2 3-2 3 0 2.5 2 5c2-2.5 2-5 2-5s-2-.5-2-3 2-3 2-3 0-2.5-2-5z"/></svg>
-          Sacred Threads
+          Sacred Rakhi
         </a>
         <p>Premium rakhis and festive gifting, crafted with care and delivered across India since 2018.</p>
         <div class="social-row">
@@ -687,10 +853,10 @@
       <div class="footer-col"><h5>Company</h5><a href="#">About Us</a><a href="#">Careers</a><a href="#">Press</a></div>
       <div class="footer-col"><h5>Support</h5><a href="#">Customer Support</a><a href="#">Track Order</a><a href="#">Returns</a></div>
       <div class="footer-col"><h5>Legal</h5><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
-      <div class="footer-col"><h5>Contact</h5><a href="#">care@sacredthreads.in</a><a href="#">+91 98765 43210</a><a href="#">Mumbai, India</a></div>
+      <div class="footer-col"><h5>Contact</h5><a href="#">care@sacredrakhi.in</a><a href="#">+91 98765 43210</a><a href="#">Mumbai, India</a></div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Sacred Threads. All rights reserved.</span>
+      <span>© 2026 Sacred Rakhi. All rights reserved.</span>
       <span>Made with care for every bond.</span>
     </div>
   </div>
@@ -710,16 +876,16 @@ function rakhiIcon(color, i){
 }
 
 const products = [
-  {id:1,name:'Kundan Pearl Rakhi',desc:'Handset kundan stones with pearl drops on silk thread.',price:349,mrp:499,rating:4.8,reviews:212},
-  {id:2,name:'Sandalwood Zari Rakhi',desc:'Fragrant sandalwood base with fine zari embroidery.',price:299,mrp:399,rating:4.6,reviews:158},
-  {id:3,name:'Rudraksha Silver Rakhi',desc:'92.5 silver bead with natural rudraksha centre.',price:549,mrp:749,rating:4.9,reviews:301},
-  {id:4,name:'Lumba Rakhi Set of 2',desc:'Elegant bhabhi lumba pair in maroon and gold tones.',price:399,mrp:549,rating:4.7,reviews:97},
-  {id:5,name:'Kids Cartoon Rakhi',desc:'Playful character rakhi with soft plush finish.',price:199,mrp:249,rating:4.5,reviews:410},
-  {id:6,name:'Bhaiya-Bhabhi Rakhi Set',desc:'Matching duo set for brother and sister-in-law.',price:449,mrp:599,rating:4.7,reviews:143},
-  {id:7,name:'American Diamond Rakhi',desc:'Sparkling AD stone work on a gold-toned base.',price:379,mrp:499,rating:4.6,reviews:176},
-  {id:8,name:'Silk Thread Designer Rakhi',desc:'Hand-braided silk thread in festive dual tone.',price:249,mrp:349,rating:4.5,reviews:88},
-  {id:9,name:'Auspicious Om Rakhi',desc:'Sacred Om motif in brushed gold finish.',price:279,mrp:379,rating:4.8,reviews:203},
-  {id:10,name:'Peacock Motif Rakhi',desc:'Hand-painted peacock design with mirror work.',price:329,mrp:449,rating:4.6,reviews:121},
+  {id:1,name:'Kundan Pearl Rakhi',desc:'Handset kundan stones with pearl drops on silk thread.',price:349,mrp:499,rating:4.8,reviews:212,boughtToday:34,stockLeft:6},
+  {id:2,name:'Sandalwood Zari Rakhi',desc:'Fragrant sandalwood base with fine zari embroidery.',price:299,mrp:399,rating:4.6,reviews:158,boughtToday:19,stockLeft:11},
+  {id:3,name:'Rudraksha Silver Rakhi',desc:'92.5 silver bead with natural rudraksha centre.',price:549,mrp:749,rating:4.9,reviews:301,boughtToday:41,stockLeft:4},
+  {id:4,name:'Lumba Rakhi Set of 2',desc:'Elegant bhabhi lumba pair in maroon and gold tones.',price:399,mrp:549,rating:4.7,reviews:97,boughtToday:22,stockLeft:8},
+  {id:5,name:'Kids Cartoon Rakhi',desc:'Playful character rakhi with soft plush finish.',price:199,mrp:249,rating:4.5,reviews:410,boughtToday:56,stockLeft:15},
+  {id:6,name:'Bhaiya-Bhabhi Rakhi Set',desc:'Matching duo set for brother and sister-in-law.',price:449,mrp:599,rating:4.7,reviews:143,boughtToday:17,stockLeft:5},
+  {id:7,name:'American Diamond Rakhi',desc:'Sparkling AD stone work on a gold-toned base.',price:379,mrp:499,rating:4.6,reviews:176,boughtToday:28,stockLeft:9},
+  {id:8,name:'Silk Thread Designer Rakhi',desc:'Hand-braided silk thread in festive dual tone.',price:249,mrp:349,rating:4.5,reviews:88,boughtToday:15,stockLeft:12},
+  {id:9,name:'Auspicious Om Rakhi',desc:'Sacred Om motif in brushed gold finish.',price:279,mrp:379,rating:4.8,reviews:203,boughtToday:31,stockLeft:3},
+  {id:10,name:'Peacock Motif Rakhi',desc:'Hand-painted peacock design with mirror work.',price:329,mrp:449,rating:4.6,reviews:121,boughtToday:24,stockLeft:7},
 ];
 
 const categories = [
@@ -760,11 +926,12 @@ const features = [
 ];
 iconPaths.truck = '<rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6" cy="19" r="2"/><circle cx="17.5" cy="19" r="2"/>';
 iconPaths.lock = '<rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>';
+iconPaths.fire = '<path d="M12 2c1 3-2 4-2 7a3 3 0 0 0 6 0c1 1 1 3 0 4.5A6 6 0 1 1 8 9c1.5 0 1-2.5 4-7z"/>';
 
 const testimonials = [
   {name:'Anjali M.', loc:'Mumbai', text:'The rakhi quality was stunning and packaging felt truly premium. My brother loved it and it arrived a day early.'},
   {name:'Rohit S.', loc:'Delhi', text:'Ordered the hamper for my sister — beautifully arranged with sweets and a rakhi. Checkout was smooth too.'},
-  {name:'Priya K.', loc:'Bengaluru', text:'Been ordering from Sacred Threads for three years now. Consistent quality and always on time.'},
+  {name:'Priya K.', loc:'Bengaluru', text:'Been ordering from Sacred Rakhi for three years now. Consistent quality and always on time.'},
 ];
 
 /* ============ RENDER ============ */
@@ -782,15 +949,25 @@ function stars(rating){
   return '★'.repeat(full) + '☆'.repeat(5-full);
 }
 
-function renderProducts(){
-  document.getElementById('productGrid').innerHTML = products.map((p,i)=>{
-    const discount = Math.round((1-p.price/p.mrp)*100);
-    const color = rakhiColors[i % rakhiColors.length];
-    return `
-    <div class="product-card fade-up">
+function urgencyRowHTML(p, size){
+  const lowStock = p.stockLeft <= 6;
+  const cls = size === 'lg' ? 'urgency-row lg' : 'urgency-row';
+  return `
+    <div class="${cls}">
+      <span class="urgency-item fire">${iconSvg('fire',12)} ${p.boughtToday} bought today</span>
+      <span class="urgency-item ${lowStock?'low-stock':''}">${lowStock ? 'Only '+p.stockLeft+' left — selling fast!' : p.stockLeft+' in stock'}</span>
+    </div>`;
+}
+
+function productCardHTML(p, i){
+  const discount = Math.round((1-p.price/p.mrp)*100);
+  const color = rakhiColors[i % rakhiColors.length];
+  const isWished = wishlist.includes(p.id);
+  return `
+    <div class="product-card fade-up in">
       <div class="product-visual" style="background:linear-gradient(150deg,#F6ECDC,#EFDCB8);cursor:pointer;" onclick="openProductPage(${p.id})">
-        <span class="discount-tag">${discount}% OFF</span>
-        <button class="wish-btn" aria-label="Add to wishlist" onclick="event.stopPropagation();toggleWish(this)">
+        <span class="discount-tag">SALE · ${discount}% OFF</span>
+        <button class="wish-btn ${isWished?'active':''}" data-id="${p.id}" aria-label="Add to wishlist" onclick="event.stopPropagation();toggleWishlist(${p.id})">
           ${iconSvg('heart',15)}
         </button>
         ${rakhiIcon(color,i)}
@@ -802,12 +979,16 @@ function renderProducts(){
         <span class="price-now">₹${p.price}</span>
         <span class="price-was">₹${p.mrp}</span>
       </div>
+      ${urgencyRowHTML(p)}
       <div class="product-actions">
         <button class="btn btn-ghost btn-sm" onclick="addToCart(${p.id})">Add to Cart</button>
         <button class="btn btn-primary btn-sm" onclick="openProductPage(${p.id})">Buy Now</button>
       </div>
     </div>`;
-  }).join('');
+}
+
+function renderProducts(){
+  document.getElementById('productGrid').innerHTML = products.map((p,i)=> productCardHTML(p,i)).join('');
 }
 
 function renderCategories(){
@@ -838,6 +1019,43 @@ function renderTestimonials(){
       <p>${t.text}</p>
     </div>`).join('');
 }
+
+let wishlist = [];
+
+/* ============ RAKSHA BANDHAN COUNTDOWN ============ */
+function startRakshaBandhanCountdown(){
+  const target = new Date('2026-08-28T00:00:00');
+  const dEl = document.getElementById('rbDays');
+  const hEl = document.getElementById('rbHours');
+  const mEl = document.getElementById('rbMinutes');
+  const sEl = document.getElementById('rbSeconds');
+  const labelEl = document.querySelector('.rb-label-text');
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function tick(){
+    const now = new Date();
+    let diff = target - now;
+    if(diff <= 0){
+      dEl.textContent = '00'; hEl.textContent = '00'; mEl.textContent = '00'; sEl.textContent = '00';
+      if(labelEl) labelEl.innerHTML = 'Happy Raksha Bandhan! <strong>🎉</strong>';
+      clearInterval(timerHandle);
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    dEl.textContent = pad(days);
+    hEl.textContent = pad(hours);
+    mEl.textContent = pad(minutes);
+    sEl.textContent = pad(seconds);
+  }
+
+  tick();
+  const timerHandle = setInterval(tick, 1000);
+}
+startRakshaBandhanCountdown();
 
 renderFeatures();
 renderProducts();
@@ -919,7 +1137,7 @@ function openProductPage(id){
         </div>
       </div>
       <div class="pp-info">
-        <div class="eyebrow">Sacred Threads Original</div>
+        <div class="eyebrow">Sacred Rakhi Original</div>
         <h1>${p.name}</h1>
         <div class="stars">${stars(p.rating)}<span>${p.rating} (${p.reviews} reviews)</span></div>
         <div class="pp-price-row">
@@ -927,6 +1145,7 @@ function openProductPage(id){
           <span class="price-was">₹${p.mrp}</span>
           <span class="pp-discount">${discount}% off</span>
         </div>
+        ${urgencyRowHTML(p, 'lg')}
         <p style="font-size:14.5px;color:var(--charcoal-soft);line-height:1.6;max-width:440px;">${p.desc}</p>
         <div class="pp-qty">
           <span style="font-size:13.5px;font-weight:600;">Quantity</span>
@@ -937,6 +1156,17 @@ function openProductPage(id){
         <div class="pp-actions">
           <button class="btn btn-ghost" onclick="ppAddToCart()">Add to Cart</button>
           <button class="btn btn-primary" onclick="ppBuyNow()">Buy Now</button>
+          <button class="wish-btn pp-wish-btn ${wishlist.includes(p.id)?'active':''}" data-id="${p.id}" aria-label="Add to wishlist" onclick="toggleWishlist(${p.id})">
+            ${iconSvg('heart',17)}
+          </button>
+        </div>
+        <div class="pincode-check">
+          <label for="ppPincode">Check delivery date</label>
+          <div class="pincode-row">
+            <input id="ppPincode" type="text" inputmode="numeric" placeholder="Enter pincode" oninput="onlyDigits(this,6)" maxlength="6">
+            <button class="btn btn-secondary btn-sm" style="width:auto;padding:11px 18px;" onclick="checkDelivery()">Check</button>
+          </div>
+          <div id="pincodeResult" class="pincode-result"></div>
         </div>
         <div class="pp-perks">
           <div class="pp-perk">${iconSvg('truck',17)} Free shipping across India, delivered in 3-5 days</div>
@@ -948,7 +1178,7 @@ function openProductPage(id){
 
     <div class="pp-desc-section">
       <h3>Product Description</h3>
-      <p>${p.name} is handcrafted for Raksha Bandhan, designed to be worn with pride and remembered for years. Each piece is quality-checked and packed in a signature Sacred Threads box, ready to gift straight out of the envelope. ${p.desc}</p>
+      <p>${p.name} is handcrafted for Raksha Bandhan, designed to be worn with pride and remembered for years. Each piece is quality-checked and packed in a signature Sacred Rakhi box, ready to gift straight out of the envelope. ${p.desc}</p>
       <p>Every order includes a roli-chawal sachet and a printed greeting card, so all your sister or brother needs to do is tie it on.</p>
       <div class="pp-specs">
         ${specLabels.map((label,idx)=>`<div class="pp-spec"><b>${label}</b><span>${specs[idx]}</span></div>`).join('')}
@@ -1022,10 +1252,48 @@ function changeQty(id, delta){
   renderCart();
 }
 
-function toggleWish(btn){
-  btn.classList.toggle('active');
-  btn.style.color = btn.classList.contains('active') ? '#7A1F2B' : '';
-  btn.style.background = btn.classList.contains('active') ? '#F6E3C8' : '';
+function toggleWishlist(id){
+  const idx = wishlist.indexOf(id);
+  if(idx === -1){ wishlist.push(id); showToast('Added to wishlist'); }
+  else{ wishlist.splice(idx,1); showToast('Removed from wishlist'); }
+  syncWishlistUI();
+}
+
+function syncWishlistUI(){
+  document.getElementById('wishlistBadge').textContent = wishlist.length;
+  document.querySelectorAll('.wish-btn[data-id]').forEach(btn=>{
+    const id = Number(btn.dataset.id);
+    btn.classList.toggle('active', wishlist.includes(id));
+  });
+  if(document.getElementById('wishlistOverlay').classList.contains('open')){
+    renderWishlistPage();
+  }
+}
+
+function renderWishlistPage(){
+  const grid = document.getElementById('wishlistGrid');
+  const items = products.filter(p=>wishlist.includes(p.id));
+  if(items.length===0){
+    grid.innerHTML = `<div class="wishlist-empty">
+      <p>Your wishlist is empty</p>
+      <p>Tap the heart icon on any rakhi to save it here.</p>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = `<div class="wishlist-grid">${items.map(p=>{
+    const i = products.findIndex(x=>x.id===p.id);
+    return productCardHTML(p,i);
+  }).join('')}</div>`;
+}
+
+function openWishlistPage(){
+  renderWishlistPage();
+  document.getElementById('wishlistOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeWishlistPage(){
+  document.getElementById('wishlistOverlay').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function pulseBadge(){
@@ -1083,6 +1351,29 @@ function onlyLetters(el){
 }
 function clearInvalid(el){ el.classList.remove('invalid'); }
 
+/* ============ PINCODE DELIVERY CHECKER ============ */
+function checkDelivery(){
+  const input = document.getElementById('ppPincode');
+  const result = document.getElementById('pincodeResult');
+  const pincode = input.value.trim();
+
+  if(!/^[0-9]{6}$/.test(pincode)){
+    input.classList.add('invalid');
+    result.className = 'pincode-result show err';
+    result.innerHTML = 'Please enter a valid 6-digit pincode.';
+    return;
+  }
+  input.classList.remove('invalid');
+
+  const today = new Date();
+  const deliveryDate = new Date(today);
+  deliveryDate.setDate(today.getDate() + 3 + (parseInt(pincode.slice(-1),10) % 3));
+  const formatted = deliveryDate.toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short' });
+
+  result.className = 'pincode-result show ok';
+  result.innerHTML = `${iconSvg('truck',15)} Delivered by <b>${formatted}</b> to ${pincode}`;
+}
+
 function openCheckout(){
   if(cart.length===0) return;
   closeCart();
@@ -1136,7 +1427,7 @@ function proceedToPay(){
   const amount = cart.reduce((s,c)=>s+c.price*c.qty,0);
   document.getElementById('payAmount').textContent = amount;
 
-  const upiLink = `upi://pay?pa=muhammad078@fam&pn=Sacred%20Threads&am=${amount}&cu=INR&tn=Order%20Payment`;
+  const upiLink = `upi://pay?pa=muhammad078@fam&pn=Sacred%20Rakhi&am=${amount}&cu=INR&tn=Order%20Payment`;
   document.getElementById('payUpiBtn').onclick = function(){
     window.location.href = upiLink;
   };
@@ -1149,12 +1440,98 @@ function closePaymentModal(){
 }
 
 function confirmPaymentDone(){
+  const orderId = 'ST' + Date.now().toString().slice(-8);
+  const orderDate = new Date();
+
+  const name = document.getElementById('cfName').value.trim();
+  const mobile = document.getElementById('cfMobile').value.trim();
+  const address = document.getElementById('cfAddress').value.trim();
+  const city = document.getElementById('cfCity').value.trim();
+  const state = document.getElementById('cfState').value.trim();
+  const pincode = document.getElementById('cfPincode').value.trim();
+  const landmark = document.getElementById('cfLandmark').value.trim();
+  const orderItems = cart.map(c=>({...c}));
+  const total = orderItems.reduce((s,c)=>s+c.price*c.qty,0);
+
   closePaymentModal();
   closeCheckout();
-  showToast('Payment successful! Order placed.');
   cart = [];
   renderCart();
+
+  renderOrderConfirmation({orderId, orderDate, name, mobile, address, city, state, pincode, landmark, orderItems, total});
+  document.getElementById('confirmOverlay').classList.add('open');
+  document.getElementById('confirmContent').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
 }
+
+function addDays(date, days){
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+function fmtDate(d){
+  return d.toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short' });
+}
+
+function renderOrderConfirmation(order){
+  const steps = [
+    { label:'Order Placed', date: fmtDate(order.orderDate), done:true },
+    { label:'Packed', date: fmtDate(addDays(order.orderDate,1)), done:false },
+    { label:'Shipped', date: fmtDate(addDays(order.orderDate,2)), done:false },
+    { label:'Out for Delivery', date: fmtDate(addDays(order.orderDate,4)), done:false },
+    { label:'Delivered', date: fmtDate(addDays(order.orderDate,5)), done:false },
+  ];
+
+  document.getElementById('confirmContent').innerHTML = `
+    <div class="confirm-head fade-up in">
+      <div class="confirm-check">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h1>Order Confirmed!</h1>
+      <p>Thank you${order.name ? ', ' + order.name : ''} — your order <span class="order-id">#${order.orderId}</span> has been placed successfully.</p>
+    </div>
+
+    <div class="track-card fade-up in">
+      <h3>Track Your Order</h3>
+      <div class="progress-bar">
+        ${steps.map(s=>`
+          <div class="progress-step ${s.done?'done':''}">
+            <div class="step-line"></div>
+            <div class="step-circle">${s.done ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : ''}</div>
+            <div class="step-label">${s.label}</div>
+            <div class="step-date">${s.date}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="confirm-grid">
+      <div class="confirm-card confirm-items fade-up in">
+        <h4>Order Summary</h4>
+        ${order.orderItems.map(c=>`<div class="ck-item"><span>${c.name} <span class="ck-qty">×${c.qty}</span></span><span>₹${c.price*c.qty}</span></div>`).join('')}
+        <div class="summary-row total"><span>Total Paid</span><span>₹${order.total}</span></div>
+      </div>
+      <div class="confirm-card fade-up in">
+        <h4>Delivery Address</h4>
+        <p>
+          ${order.name}<br>
+          ${order.address}${order.landmark ? ', ' + order.landmark : ''}<br>
+          ${order.city}, ${order.state} - ${order.pincode}<br>
+          Mobile: ${order.mobile}
+        </p>
+      </div>
+    </div>
+
+    <div class="confirm-actions">
+      <button class="btn btn-secondary btn-block" onclick="closeOrderConfirmation()">Continue Shopping</button>
+    </div>
+  `;
+}
+
+function closeOrderConfirmation(){
+  document.getElementById('confirmOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('confirmBack').onclick = closeOrderConfirmation;
 
 document.getElementById('ckBack').onclick = closeCheckout;
 
@@ -1170,6 +1547,8 @@ function closeCart(){ cartDrawer.classList.remove('open'); overlay.classList.rem
 
 document.getElementById('menuBtn').onclick = openCatDrawer;
 document.getElementById('closeCatDrawer').onclick = closeCatDrawer;
+document.getElementById('wishlistBtn').onclick = openWishlistPage;
+document.getElementById('wishlistBack').onclick = closeWishlistPage;
 document.getElementById('cartBtn').onclick = openCart;
 document.getElementById('closeCartDrawer').onclick = closeCart;
 overlay.onclick = ()=>{ closeCatDrawer(); closeCart(); };
